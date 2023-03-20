@@ -1,0 +1,21 @@
+[
+    { 
+       "id" : "1", 
+       "name": "This is 1st blog", 
+       "description": "blog",
+       "creator" : "user1" 
+    },
+
+    { 
+       "id" : "2",
+       "name": "This is 2nd blog", 
+       "description": "blog",
+       "creator" : "user2" 
+    },
+    { 
+        "id" : "3",
+        "name": "This is 3rd blog", 
+        "description": "blog",
+        "creator" : "user3" 
+     }
+]
