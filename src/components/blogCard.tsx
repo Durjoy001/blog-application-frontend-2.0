@@ -9,7 +9,7 @@ interface Props {
 
 export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
   return (
-    <div>
+    <div className='App'>
       <h1> {id} </h1>
       <h2> {name}</h2>
       <h2> {description}</h2>

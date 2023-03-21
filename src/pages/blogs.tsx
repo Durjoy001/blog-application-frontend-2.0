@@ -5,7 +5,7 @@ interface Props {
   
 }
 
-export const blogs : FC<Props> = () => {
+export const Blogs : FC<Props> = () => {
   return (
     <div>
       <BlogCardList Blogs = {data} /> 

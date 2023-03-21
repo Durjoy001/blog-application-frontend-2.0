@@ -2,20 +2,20 @@
     { 
        "id" : "1", 
        "name": "This is 1st blog", 
-       "description": "blog",
+       "description": "blog1",
        "creator" : "user1" 
     },
 
     { 
        "id" : "2",
        "name": "This is 2nd blog", 
-       "description": "blog",
+       "description": "blog2",
        "creator" : "user2" 
     },
     { 
         "id" : "3",
         "name": "This is 3rd blog", 
-        "description": "blog",
+        "description": "blog3",
         "creator" : "user3" 
      }
 ]
