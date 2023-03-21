@@ -1,28 +1,9 @@
-import {Blogs} from './blogs';
+import {Blogs} from './../pages/blogs';
 import * as ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 
 
 describe('home page test', () => {
-
-    let container : HTMLDivElement
-
-    beforeEach( () =>{
-        container = document.createElement('div');
-        document.body.appendChild(container);
-        //ReactDOM.render(<Blogs /> , container);
-    })
-
-    afterEach(() => {
-        document.body.removeChild(container);
-        container.remove();
-    })
-
-    test('Renders correctly', () => {
-        const inputs = container.querySelectorAll('input');
-        console.log(inputs)
-        expect(inputs).toHaveLength(0)
-    })
     test('renders blog title and content', () => {
         const name = 'This is 2nd blog';
         const blogContent = 'blog2';
@@ -35,7 +16,7 @@ describe('home page test', () => {
         expect(contentElement).toBeInTheDocument();
       });
 
-      test('renders a list of blog titles', () => {
+      test('renders list of blog', () => {
         const blogData = [
           { id: 1, name: 'This is 1st blog', description: 'blog1' , creator : 'user1'},
           { id: 2, name: 'This is 2nd blog', description: 'blog2' , creator : 'user2'},
@@ -48,5 +29,18 @@ describe('home page test', () => {
           expect(element).toHaveTextContent(blogData[index].name);
         });
       });
-    // render(<Blogs />)
+
+      test('renders an h1 tag', () => {
+        const { getByText } = render(<Blogs />);
+        const h2Element = getByText(/This is 1st blog/i);
+        expect(h2Element.tagName).toBe('H2');
+      });
+
+      test('total number of h1 and h2 tag', () => {
+        const { getAllByRole } = render(<Blogs />);
+        const h1Elements = getAllByRole('heading', { level: 1 });
+        const h2Elements = getAllByRole('heading', {level: 2});
+        expect(h1Elements).toHaveLength(3);
+        expect(h2Elements).toHaveLength(9);
+      });
 })
