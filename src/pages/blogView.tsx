@@ -1,12 +1,18 @@
 import React, {FC} from 'react';
+import { useParams } from 'react-router-dom';
+import data from './../data.json'
+import { BlogCard } from '../components/blogCard';
 
 interface Props {
+
 }
 
-export const blogView : FC<Props> = () => {
+export const BlogView : FC<Props> = () => {
+  const {id}   = useParams ();
+  var blogID: number = Number(id);
   return (
     <div>
-      <h1>This is the blog 1</h1>
+      <BlogCard {...data[blogID]}/>
     </div>
   );
 }

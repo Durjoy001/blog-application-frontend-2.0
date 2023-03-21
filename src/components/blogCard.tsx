@@ -7,8 +7,6 @@ interface Props {
   creator : string
 }
 
-
-
 export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
   return (
     <div>
