@@ -1,20 +1,24 @@
 import React, {FC} from 'react';
-import data from './../data.json'
+import blogs from './../data.json'
 import { BlogCardList } from '../components/blogCardList';
+import { BlogCard } from '../components/blogCard';
+import { Center, Box, Heading } from "@chakra-ui/react";
+import { ChakraProvider, SimpleGrid, Container } from "@chakra-ui/react";
 interface Props {
   
 }
 
 export const Blogs : FC<Props> = () => {
   return (
-    <div>
-      <BlogCardList Blogs = {data} /> 
-     {/* <ul>
-        {data.blogs.map((blog) => (
-           
-          <li key={blog.name}>{blog.name} - {blog.description} - {blog.creator}</li>
-        ))}
-      </ul> */}
-    </div>
+    <ChakraProvider>
+    <Container maxW="80rem" centerContent>
+      <SimpleGrid columns={[1, 1, 1, 1]}>
+         <BlogCardList Blogs = {blogs} />
+      </SimpleGrid>
+    </Container>
+  </ChakraProvider>
+    // <div>
+    //   <BlogCardList Blogs = {blogs} />
+    // </div>
   );
 }
