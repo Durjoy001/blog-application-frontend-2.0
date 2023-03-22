@@ -13,10 +13,12 @@ import { Blogs } from "./pages/blogs";
 import { createBlog } from "./pages/createBlog";
 import { BlogView } from "./pages/blogView";
 import { updateBlog } from "./pages/updateBlog";
+import { Navbar } from "./components/navbar";
 
 const App : FC = () =>{
   return (
      <Router>
+        <Navbar />
          <Routes>
              <Route path="/signup" Component={signUp} />
              <Route path="/signin" Component={signIn} />
