@@ -70,12 +70,4 @@ export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
       </Stack>
   </Box>
 );
-  // return (
-  //   <div className='App'>
-  //     <h1> {id} </h1>
-  //     <h1> {name}</h1>
-  //     <p> {description}</p>
-  //     <h2> {creator}</h2>
-  //   </div>
-  // );
 }

@@ -17,8 +17,5 @@ export const Blogs : FC<Props> = () => {
       </SimpleGrid>
     </Container>
   </ChakraProvider>
-    // <div>
-    //   <BlogCardList Blogs = {blogs} />
-    // </div>
   );
 }
