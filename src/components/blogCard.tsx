@@ -27,6 +27,7 @@ export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
   const [show, setShow] = React.useState(false);
   const handleToggle = () => setShow(!show);
   return (
+    <div data-testid = "test-blog-card">
     <Box
       p={4}
       display={{ md: "flex" }}
@@ -64,10 +65,11 @@ export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
         {/* <Text my={2} color="gray.500">
           {"Created at: " +time}
         </Text> */}
-        <Button  maxWidth="100px" my={2} align-right>
+        <Button data-testid = "button-test" maxWidth="100px" my={2} align-right>
           <a href ={'/blogs/view/' + id }> Show More</a> 
         </Button>
       </Stack>
   </Box>
+  </div>
 );
 }

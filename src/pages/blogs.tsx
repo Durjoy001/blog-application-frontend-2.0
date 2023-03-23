@@ -10,6 +10,7 @@ interface Props {
 
 export const Blogs : FC<Props> = () => {
   return (
+    <div data-testid = "home-page-test">
     <ChakraProvider>
     <Container maxW="80rem" centerContent>
       <SimpleGrid columns={[1, 1, 1, 1]}>
@@ -17,5 +18,6 @@ export const Blogs : FC<Props> = () => {
       </SimpleGrid>
     </Container>
   </ChakraProvider>
+  </div>
   );
 }
