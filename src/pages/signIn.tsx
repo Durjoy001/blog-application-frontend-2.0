@@ -29,7 +29,7 @@ const CFaLock = chakra(FaLock);
 interface Props {
 }
 
-export const signIn : FC<Props> = () => {
+export const SignIn : FC<Props> = () => {
   //const [showPassword, setShowPassword] = useState(false);
   //const HandleShowClick = () => setShowPassword(!showPassword);
   // const [email, setEmail] = useState();
@@ -99,7 +99,7 @@ export const signIn : FC<Props> = () => {
                                           pointerEvents="none"
                                           children={<CFaUserAlt color="gray.300" />}
                                       />
-                                      <Input type="text"
+                                      <Input data-testid = "test-email" type="text"
                                           placeholder="Email"
                                           name="email"
                                           //onChange={(e) => setEmail(e.target.value)}
@@ -114,7 +114,7 @@ export const signIn : FC<Props> = () => {
                                           color="gray.300"
                                           children={<CFaLock color="gray.300" />}
                                       />
-                                      <Input
+                                      <Input data-testid = "test-password"
                                           //type={showPassword ? "text" : "password"}
                                           placeholder="Password"
                                           name="password"
@@ -149,7 +149,7 @@ export const signIn : FC<Props> = () => {
               </Stack>
               <Box>
                   New to us?{" "}
-                  <Link color="teal.500" href="/signup">
+                  <Link data-testid = "test-signUp" color="teal.500" href="/signup">
                   Sign Up
                   </Link>
               </Box>

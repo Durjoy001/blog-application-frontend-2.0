@@ -3,12 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 //import blogData from './../data.json';
 import { ChakraProvider } from "@chakra-ui/react";
-interface blog {
-  id : string,
-  name : string,
-  description: string,
-  creator : string
-}
+import { Navbar } from '../components/navbar';
 
 describe('home page test', () => {
     test('renders blog title and content', () => {
