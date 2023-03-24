@@ -27,13 +27,14 @@ import { useContext, useState } from "react";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 interface Props {
+    
 }
 
 export const SignIn : FC<Props> = () => {
   //const [showPassword, setShowPassword] = useState(false);
   //const HandleShowClick = () => setShowPassword(!showPassword);
-  // const [email, setEmail] = useState();
-  // const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   // const [requestState, setRequestState] = useState("not-requested");
   // const toast = useToast();
   const isLoggedIn = false;
@@ -102,7 +103,7 @@ export const SignIn : FC<Props> = () => {
                                       <Input data-testid = "test-email" type="text"
                                           placeholder="Email"
                                           name="email"
-                                          //onChange={(e) => setEmail(e.target.value)}
+                                        //   onChange={(e) => setEmail(e.target.value)}
                                           required
                                       />
                                   </InputGroup>
@@ -118,7 +119,7 @@ export const SignIn : FC<Props> = () => {
                                           //type={showPassword ? "text" : "password"}
                                           placeholder="Password"
                                           name="password"
-                                          //onChange={(e) => setPassword(e.target.value)}
+                                        //   onChange={(e) => setPassword(e.target.value)}
                                           required
                                       />
                                       {/* <InputRightElement width="4.5rem">

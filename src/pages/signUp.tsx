@@ -31,7 +31,7 @@ const CFaLock = chakra(FaLock);
 interface Props {
 }
 
-export const signUp : FC<Props> = () => {
+export const SignUp : FC<Props> = () => {
   // const [showPassword, setShowPassword] = useState(false);
   // const handleShowClick = () => setShowPassword(!showPassword);
   // const [email, setEmail] = useState();
@@ -128,7 +128,7 @@ else
                                       pointerEvents="none"
                                       children={<CFaUserAlt color="gray.300" />}
                                   />
-                                  <Input 
+                                  <Input data-testid = "test-name"
                                       placeholder="Name"
                                       type="text"
                                       name="name"
@@ -154,7 +154,7 @@ else
                                       pointerEvents="none"
                                       children={<CFaUserAlt color="gray.300" />}
                                   />
-                                  <Input 
+                                  <Input data-testid = "test-email"
                                       placeholder="Email"
                                       type="email"
                                       //m={1}
@@ -171,7 +171,7 @@ else
                                       color="gray.300"
                                       children={<CFaLock color="gray.300" />}
                                   />
-                                  <Input
+                                  <Input  data-testid = "test-password"
                                       //type={showPassword ? "text" : "password"}
                                       placeholder="Password"
                                       name="password"
@@ -197,7 +197,7 @@ else
                                       color="gray.300"
                                       children={<CFaLock color="gray.300" />}
                                   />
-                                  <Input
+                                  <Input data-testid = "test-confirmPassword"
                                       //type={showPassword ? "text" : "password"}
                                       placeholder="Confirm Password"
                                       name="passwordConfirm"
