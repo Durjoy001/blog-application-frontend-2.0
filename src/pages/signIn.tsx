@@ -59,7 +59,7 @@ export const SignIn : FC<Props> = () => {
   // }
 
   const logIn = () => {
-    console.log('lognin')
+    console.log('login')
   }
   if (isLoggedIn){
       return (

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BlogCard } from '../components/blogCard';
 
-describe('home page test', () => {
+describe('blog card testing', () => {
     const blogs = [
         {
           id: "1",

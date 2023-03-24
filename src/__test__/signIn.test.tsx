@@ -31,4 +31,19 @@ describe('Login Page Testing', () => {
         const signUpLink = screen.getByTestId('test-signUp');
         expect(signUpLink).toHaveAttribute('href', '/signup');
       });
+
+      test("calls logIn function on form submission", () => {
+        const logInSpy = jest.spyOn(console, "log");
+        render(<SignIn />);
+        const emailInput = screen.getByTestId("test-email");
+        const passwordInput = screen.getByTestId("test-password");
+        const submitButton = screen.getByText("Login");
+
+        fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+        fireEvent.change(passwordInput, { target: { value: "password123" } });
+        fireEvent.click(submitButton);
+        expect(logInSpy).toHaveBeenCalled();
+        expect(logInSpy).toHaveBeenCalledWith("login");
+      });
+    
 })
