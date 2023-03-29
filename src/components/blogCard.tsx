@@ -24,8 +24,8 @@ interface Props {
 
 export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
   //const { id,name, description, creator ,time} = props;
-  const [show, setShow] = React.useState(false);
-  const handleToggle = () => setShow(!show);
+  // const [show, setShow] = React.useState(false);
+  // const handleToggle = () => setShow(!show);
   return (
     <div data-testid = "test-blog-card">
     <Box
