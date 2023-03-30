@@ -17,6 +17,7 @@ interface Props {
 
 export const Navbar : FC<Props> = () => {
   //const { isLoggedIn, login, logout, user } = useContext(AuthContext);
+  const isLoggedIn = true;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
 
@@ -57,14 +58,14 @@ export const Navbar : FC<Props> = () => {
             </Button>
           )
         } */}
-        {/* {
+        {
           isLoggedIn && (<Button as = {RouterLink} to="/blogs"
             variant="outline"
             _hover={{ bg: "teal.700", borderColor: "teal.700" }}
           >
             Create Blog
           </Button>)
-        } */}
+        }
         {
           (<Button as = {RouterLink} to="/signin"
             variant="outline"

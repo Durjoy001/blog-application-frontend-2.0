@@ -65,8 +65,8 @@ export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
         {/* <Text my={2} color="gray.500">
           {"Created at: " +time}
         </Text> */}
-        <Button data-testid = "button-test" maxWidth="100px" my={2} align-right>
-          <a href ={'/blogs/view/' + id }> Show More</a> 
+        <Button as = {RouterLink} to= {`/blogs/view/${id}`}  data-testid = "button-test" maxWidth="100px" my={2} align-right>
+          Show More
         </Button>
       </Stack>
   </Box>

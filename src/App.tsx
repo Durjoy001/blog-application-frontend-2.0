@@ -10,7 +10,7 @@ import './App.css';
 import { SignUp } from "./pages/signUp";
 import { SignIn } from "./pages/signIn";
 import { Blogs } from "./pages/blogs";
-import { createBlog } from "./pages/createBlog";
+import { CreateBlog } from "./pages/createBlog";
 import { BlogView } from "./pages/blogView";
 import { updateBlog } from "./pages/updateBlog";
 import { Navbar } from "./components/navbar";
@@ -23,7 +23,7 @@ const App : FC = () =>{
              <Route path="/signup" Component={SignUp} />
              <Route path="/signin" Component={SignIn} />
              <Route path="/" Component= {Blogs} />
-             <Route path="/blogs" Component={createBlog} />
+             <Route path="/blogs" Component={CreateBlog} />
              <Route path="/blogs/view/:id" Component={BlogView} />
              <Route path="/blogs/:id" Component={updateBlog} />
          </Routes>
