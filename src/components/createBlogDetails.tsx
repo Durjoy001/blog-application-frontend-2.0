@@ -29,6 +29,9 @@ import { nanoid } from '@reduxjs/toolkit'
 import { postAdded } from '../slices/blogSlice';
 import { Link as RouterLink } from "react-router-dom";
 
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { RootState } from '../app/store';
+
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
@@ -39,7 +42,7 @@ interface Props {
 export const CreateBlogDetails : FC<Props> = () => {
   const [name,setName] = useState('');
   const [description,setDescription] = useState('');
-
+  const data = useAppSelector((state: RootState) => state.blogs);
   const [requestState, setRequestState] = useState("completed");
   const [error,setError] = useState();
   const toast = useToast(); 
@@ -47,27 +50,29 @@ export const CreateBlogDetails : FC<Props> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
+  const newID = data.length;
+
   const createBlog = (e : any) => {
       e.preventDefault();
       setRequestState("completed");
       if (name && description) {
         dispatch(
           postAdded({
-            id: nanoid(),
+            id: newID,
             name,
             description,
             creator: 'admin'
-          })
-        )
+          })  
+        )  
         setName('')
         setDescription('')
         navigate('/');
-      }
+      } 
   }
   return (
-      <form onSubmit={createBlog}>
+      <form onSubmit={createBlog}>  
           <Stack
-          spacing={4}
+          spacing={4}   
           p="5rem"
           backgroundColor="whiteAlpha.900"
           boxShadow="md"

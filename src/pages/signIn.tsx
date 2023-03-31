@@ -22,6 +22,7 @@ import {
   } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 //import axios from "axios";
 
 const CFaUserAlt = chakra(FaUserAlt);
@@ -150,7 +151,7 @@ export const SignIn : FC<Props> = () => {
               </Stack>
               <Box>
                   New to us?{" "}
-                  <Link data-testid = "test-signUp" color="teal.500" href="/signup">
+                  <Link as = {RouterLink} to =  "/signup" data-testid = "test-signUp" color="teal.500">
                   Sign Up
                   </Link>
               </Box>

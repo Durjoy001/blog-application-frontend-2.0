@@ -52,7 +52,7 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
 
   const navigate = useNavigate();
 
-
+  
   const deleteBlog = (e : any) =>{
     e.preventDefault();
     setRequestState("completed");
