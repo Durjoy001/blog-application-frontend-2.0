@@ -18,5 +18,5 @@ export const BlogView : FC<Props> = () => {
     <div>
       <BlogDetails {...data[blogID]}/>
     </div>
-  );
+  );  
 }

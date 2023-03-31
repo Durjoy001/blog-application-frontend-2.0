@@ -49,56 +49,20 @@ export const SignUp : FC<Props> = () => {
 
   const isLoggedIn = false;
 
-  // const signUp = (e) => {
-  //     e.preventDefault();
-  //     setRequestState("loading");
-  //     axios.post('https://blog-application-backend101.herokuapp.com/api/v1/users/signup', {name,email,password,passwordConfirm})
-  //     .then((res) => {
-  //         setRequestState("completed");
-  //         toast({
-  //             title: "You Successfully Create your Account!! Please Login to Continue!!",
-  //             duration: 4000,
-  //             status: "success",
-  //             isClosable: true,
-  //         });
-  //     }).catch((err) => {
-  //         // if(err.response.data.errors){
-  //         //     setError(err.response.data.errors[0]);
-  //         // }
-  //         setNameError(null); 
-  //         setPasswordError(null);
-  //         setConfirmPasswordError(null);
-  //         setUserUniqueError(null)
-  //         if(err.response.data.errors){
-  //             for(let i=0;i<err.response.data.errors.length;i++){
-  //                 if(err.response.data.errors[i].split(' ')[0] == 'User'){setNameError(err.response.data.errors[i]);}
-  //                 if(err.response.data.errors[i].split(' ')[0] == 'Password'){setPasswordError(err.response.data.errors[i]);}
-  //             }
-  //         }
-  //         else if(err.response.data.message.message){
-  //             setConfirmPasswordError(err.response.data.message.errors.passwordConfirm.message);
-  //         }          
-  //         else{
-  //             setUserUniqueError("User name already exists")
-  //         }
-  //         setRequestState("error");
-  //     })
-  // }
-
   const signUp = () => {
     console.log("sign Up")
   }
-
+  
 if (isLoggedIn){
   return (
     <div>
       <h1>you are already logged in</h1>
     </div>
-  )
+  )  
 }
 else
   return (
-      <Flex
+      <Flex  
           flexDirection="column"
           width="100wh"
           height="100vh"
@@ -108,7 +72,7 @@ else
       >
           <Stack
               flexDir="column"
-              mb="2"
+              mb="2"  
               justifyContent="center"
               alignItems="center"
           >
@@ -182,7 +146,7 @@ else
                                       <Button h="1.75rem" size="sm" onClick={handleShowClick}>
                                       {showPassword ? "Hide" : "Show"}
                                       </Button>
-                                  </InputRightElement> */}
+                                  </InputRightElement> */}  
                               </InputGroup>
                           </FormControl>
                           {/* {

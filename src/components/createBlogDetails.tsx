@@ -52,25 +52,25 @@ export const CreateBlogDetails : FC<Props> = () => {
   
   const newID = data.length;
 
-  const createBlog = (e : any) => {
+  const createBlog = (e : any) => {  
       e.preventDefault();
-      setRequestState("completed");
-      if (name && description) {
+      setRequestState("completed");  
+      if (name && description) {  
         dispatch(
-          postAdded({
+          postAdded({  
             id: newID,
             name,
-            description,
-            creator: 'admin'
-          })  
+            description,    
+            creator: 'admin'  
+          })    
         )  
         setName('')
         setDescription('')
-        navigate('/');
+        navigate('/');  
       } 
   }
   return (
-      <form onSubmit={createBlog}>  
+      <form onSubmit={createBlog}>    
           <Stack
           spacing={4}   
           p="5rem"

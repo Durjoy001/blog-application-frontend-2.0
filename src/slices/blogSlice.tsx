@@ -17,11 +17,18 @@ const blogsSlice = createSlice({
           existingPost.name = name
           existingPost.description = description
         }
+      },
+      postDeleted(state, action) {
+        const id = action.payload
+        const index = state.findIndex(blog => blog.id === id)
+        if (index !== -1) {
+          state.splice(index, 1);
+        }
       }
     }
   })
   
-export const { postAdded , postUpdated} = blogsSlice.actions
+export const { postAdded , postUpdated , postDeleted} = blogsSlice.actions
   
 // export default postsSlice.reducer
 

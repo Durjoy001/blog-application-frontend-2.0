@@ -25,10 +25,12 @@ import { useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useEffect } from "react";
 //import { Redirect, useHistory } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { RootState } from '../app/store';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../app/store';
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { postDeleted } from './../slices/blogSlice';
 
 interface Props {
   id : string,
@@ -51,13 +53,15 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const cancelRef = React.useRef<null | HTMLButtonElement>(null);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  
+
   const deleteBlog = (e : any) =>{
-    e.preventDefault();
+    e.preventDefault();    
     setRequestState("completed");
-    console.log("deleted")
-  }
+    dispatch(postDeleted(id))
+    navigate('/')
+  }  
 return (
     <ChakraProvider>
       <Container maxW="80rem" centerContent>
