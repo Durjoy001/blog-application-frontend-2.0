@@ -1,6 +1,4 @@
 import React, {FC} from 'react';
-//import { AuthContext } from "../context/authContext";
-//import { Redirect, useHistory } from "react-router-dom";
 import { redirect} from "react-router-dom";
 import {
     Flex,
@@ -23,7 +21,11 @@ import {
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-//import axios from "axios";
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { RootState } from '../app/store';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authLogin } from '../slices/userSlice';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -34,33 +36,31 @@ interface Props {
 export const SignIn : FC<Props> = () => {
   //const [showPassword, setShowPassword] = useState(false);
   //const HandleShowClick = () => setShowPassword(!showPassword);
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  // const [requestState, setRequestState] = useState("not-requested");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [requestState, setRequestState] = useState("not-requested");
   // const toast = useToast();
   const isLoggedIn = false;
-  //const { isLoggedIn, login } = useContext(AuthContext);
 
-  // const logIn = (e) =>{
-  //     e.preventDefault();
-  //     setRequestState("loading");
-  //     axios.post('https://blog-application-backend101.herokuapp.com/api/v1/users/login',{email,password})
-  //     .then((res) => {
-  //         setRequestState("completed");
-  //         login(res.data);
-  //         toast({
-  //             title: " You Logged in Successfully!!",
-  //             duration: 4000,
-  //             status: "success",
-  //             isClosable: true,
-  //         })
-  //     }).catch((err) => {
-  //         setRequestState("error");
-  //     })
-  // }
-
+  const data = useAppSelector((state: RootState) => state.users);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const logIn = () => {
-    console.log('login')
+    console.log(data);
+    for (let i = 0; i < data.user.length; i++) {
+        if(data.user[i].email === email && data.user[i].password === password){
+            console.log('dukse')
+            setRequestState('completed');
+            dispatch(  
+                authLogin({
+                  email,    
+                  password,
+                })    
+              )  
+            navigate('/');
+            return;
+        }
+    }
   }
   if (isLoggedIn){
       return (
@@ -70,11 +70,11 @@ export const SignIn : FC<Props> = () => {
       )
   }
   else
-      return (
-          <Flex
-              flexDirection="column"
-              width="100wh"
-              height="100vh"
+      return (       
+          <Flex    
+              flexDirection="column"         
+              width="100wh"      
+              height="100vh"   
               backgroundColor="gray.200"
               justifyContent="center"
               alignItems="center"
@@ -82,7 +82,7 @@ export const SignIn : FC<Props> = () => {
               <Stack
                   flexDir="column"
                   mb="2"
-                  justifyContent="center"
+                  justifyContent="center"    
                   alignItems="center"
               >
                   <Avatar bg="teal.500" />
@@ -92,7 +92,7 @@ export const SignIn : FC<Props> = () => {
                           <Stack
                               spacing={4}
                               p="1rem"
-                              backgroundColor="whiteAlpha.900"
+                              backgroundColor="whiteAlpha.900"  
                               boxShadow="md"
                           >
                               <FormControl>
@@ -104,7 +104,7 @@ export const SignIn : FC<Props> = () => {
                                       <Input data-testid = "test-email" type="text"
                                           placeholder="Email"
                                           name="email"
-                                        //   onChange={(e) => setEmail(e.target.value)}
+                                          onChange={(e) => setEmail(e.target.value)}
                                           required
                                       />
                                   </InputGroup>
@@ -120,7 +120,7 @@ export const SignIn : FC<Props> = () => {
                                           //type={showPassword ? "text" : "password"}
                                           placeholder="Password"
                                           name="password"
-                                        //   onChange={(e) => setPassword(e.target.value)}
+                                          onChange={(e) => setPassword(e.target.value)}
                                           required
                                       />
                                       {/* <InputRightElement width="4.5rem">

@@ -8,6 +8,7 @@ export const updateBlog : FC<Props> = () => {
   return (
     <div>
        <EditBlog />
-    </div>
-  );
+    </div>  
+  );  
 }
+  

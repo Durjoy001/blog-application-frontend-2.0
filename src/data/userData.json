@@ -1,0 +1,23 @@
+[
+    { 
+       "id" : "0", 
+       "name": "Durjoy Dey", 
+       "email": "durjoydey001@gmail.com",
+       "password" : "123", 
+       "confirmPass" : "123"
+    },
+    { 
+        "id" : "1", 
+        "name": "Durjoy", 
+        "email": "durjoydey@gmail.com",
+        "password" : "123", 
+        "confirmPass" : "123"
+    },
+    { 
+        "id" : "2", 
+        "name": "admin", 
+        "email": "admin@gmail.com",
+        "password" : "123", 
+        "confirmPass" : "123" 
+     }
+]

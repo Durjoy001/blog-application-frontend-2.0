@@ -20,26 +20,28 @@ import {
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
-//import axios from "axios";
-//import { Redirect, useHistory } from "react-router-dom";
-//import { AuthContext } from "../context/authContext";
 import { Link as RouterLink } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { userAdded } from '../slices/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { RootState } from '../app/store'
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
-interface Props {
+interface Props {  
 }
 
 export const SignUp : FC<Props> = () => {
   // const [showPassword, setShowPassword] = useState(false);
   // const handleShowClick = () => setShowPassword(!showPassword);
-  // const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   // //const { isLoggedIn, login } = useContext(AuthContext);
-  // const [name, setName] = useState();
-  // const [password, setPassword] = useState();
-  // const [passwordConfirm, setpasswordConfirm] = useState();
-  // const [requestState, setRequestState] = useState("not-requested");
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setpasswordConfirm] = useState('');
+  const [requestState, setRequestState] = useState("not-requested");
   // const [error,setError] = useState([]);
   // const [nameError, setNameError] = useState(null);
   // const [passwordError, setPasswordError] = useState(null);
@@ -47,29 +49,50 @@ export const SignUp : FC<Props> = () => {
   // const [userUniqueError,setUserUniqueError] = useState(null);
   // const toast = useToast(); 
 
+  const data = useAppSelector((state: RootState) => state.users);
   const isLoggedIn = false;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const newID = data.user.length;
 
-  const signUp = () => {
-    console.log("sign Up")
+  const signUp = (e : any) => {
+    e.preventDefault();  
+    setRequestState("completed");  
+    if (name && email && password && passwordConfirm) {  
+      dispatch(  
+        userAdded({  
+          id: newID,
+          name,
+          email,    
+          password,
+          passwordConfirm 
+        })    
+      )  
+      setName('');
+      setEmail('');
+      setPassword('');
+      setpasswordConfirm('');
+      navigate('/signin');  
+    } 
   }
   
-if (isLoggedIn){
+if (isLoggedIn){  
   return (
-    <div>
-      <h1>you are already logged in</h1>
+    <div>  
+      <h1>you are already logged in</h1>  
     </div>
   )  
-}
-else
-  return (
-      <Flex  
-          flexDirection="column"
-          width="100wh"
-          height="100vh"
-          backgroundColor="gray.200"
+}  
+else    
+  return (         
+      <Flex      
+          flexDirection="column"       
+          width="100wh"            
+          height="100vh"  
+          backgroundColor="gray.200"  
           justifyContent="center"
           alignItems="center"
-      >
+      >    
           <Stack
               flexDir="column"
               mb="2"  
@@ -96,7 +119,7 @@ else
                                       placeholder="Name"
                                       type="text"
                                       name="name"
-                                      //onChange={(e) => setName(e.target.value)}
+                                      onChange={(e) => setName(e.target.value)}
                                       required
                                       autoFocus
                                   />
@@ -123,7 +146,7 @@ else
                                       type="email"
                                       //m={1}
                                       name="email"
-                                      //onChange={(e) => setEmail(e.target.value)}
+                                      onChange={(e) => setEmail(e.target.value)}
                                       required
                                   />
                               </InputGroup>
@@ -139,7 +162,7 @@ else
                                       //type={showPassword ? "text" : "password"}
                                       placeholder="Password"
                                       name="password"
-                                      //onChange={(e) => setPassword(e.target.value)}
+                                      onChange={(e) => setPassword(e.target.value)}
                                       required
                                   />
                                   {/* <InputRightElement width="4.5rem">
@@ -163,9 +186,9 @@ else
                                   />
                                   <Input data-testid = "test-confirmPassword"
                                       //type={showPassword ? "text" : "password"}
-                                      placeholder="Confirm Password"
+                                      placeholder="Confirm Password"  
                                       name="passwordConfirm"
-                                      //onChange={(e) => setpasswordConfirm(e.target.value)}
+                                      onChange={(e) => setpasswordConfirm(e.target.value)}
                                       required
                                   />
                                   {/* <InputRightElement width="4.5rem">
@@ -191,7 +214,7 @@ else
                           } */}
                           <Button
                               borderRadius={0}
-                              type="submit"
+                              type="submit"  
                               variant="solid"
                               colorScheme="teal"
                               width="full"

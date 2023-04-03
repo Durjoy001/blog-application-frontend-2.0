@@ -1,15 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
+import userData from './../data/userData.json'
 
-const initialState = [
-  { id: '0', name: 'Tianna Jenkins' },
-  { id: '1', name: 'Kevin Grant' },
-  { id: '2', name: 'Madison Price' }
-]
+const initialState = {
+  user : userData,
+  isAuthenticated: false,
+  authName : ''
+}
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {}
+  reducers: {
+    userAdded(state, action) {
+      state.user.push(action.payload)
+    },
+    authLogin(state,action){  
+      const {email,password} = action.payload
+      const existingAuth = state.user.find(user => user.email === email)
+      state.isAuthenticated = true;
+      state.authName = existingAuth?.name || '';
+    }
+  } 
 })
-
+export const {userAdded,authLogin} = usersSlice.actions
 export default usersSlice.reducer
