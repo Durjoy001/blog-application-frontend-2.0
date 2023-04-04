@@ -1,16 +1,10 @@
 import React, {FC} from 'react';
 import {
   Box,
-  Flex,
-  AspectRatio,
-  Image,
   Text,
-  Link,
   Button,
   Stack,
-  Collapse,
   Container,
-  Spacer,
   SimpleGrid,
   ChakraProvider,
   useToast,
@@ -22,9 +16,6 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { useParams } from 'react-router-dom';
-import { useEffect } from "react";
-//import { Redirect, useHistory } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
@@ -40,21 +31,15 @@ interface Props {
 }
 
 export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
-  //const { id } = useParams();
-  //const [blogs, setBlogs] = useState([]);
   const [requestState, setRequestState] = useState("not-requested");
   const toast = useToast(); 
   const [isOpen, setIsOpen] = React.useState(false)
   const onClose = () => setIsOpen(false)
-  //const cancelRef = React.useRef()
-  const isLoggedIn  = true;
-  //const blogs = useAppSelector((state: RootState) => state.blogs);
-
+  const auth = useAppSelector((state: RootState) => state.users);
   const cancelRef = React.useRef<null | HTMLButtonElement>(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   const deleteBlog = (e : any) =>{
     e.preventDefault();    
@@ -63,16 +48,16 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
     navigate('/')
   }  
 return (
-    <ChakraProvider>
-      <Container maxW="80rem" centerContent>
-        <SimpleGrid columns={[1, 1, 1, 1]}>
+    <ChakraProvider>  
+      <Container maxW="80rem" centerContent>  
+        <SimpleGrid columns={[1, 1, 1, 1]}>              
             <Box 
               p={4}
               w="1000px"
-              display={{ md: "flex" }}
+              display={{ md: "flex" }}  
               //maxWidth="62rem"
               borderWidth={1}
-              margin={2}
+              margin={2}  
               padding="2rem"
             >
               <Stack
@@ -106,7 +91,7 @@ return (
                   {"Created at: " + blogs.time}
                 </Text> */}
                   {
-                    isLoggedIn && (<Button as = {RouterLink} to= {`/blogs/${id}`}
+                    auth.isAuthenticated && auth.authName === creator &&  (<Button as = {RouterLink} to= {`/blogs/${id}`}
                         w="920px"
                         variant="outline"
                         _hover={{ bg: "teal.700", borderColor: "teal.700" }}
@@ -114,21 +99,11 @@ return (
                       Update
                     </Button>)
                   }
-                  {/* {
-                    requestState === "error" && (
-                      <Text display="block" fontSize="sm" color="red">
-                        Something Went Wrong!! Please Try Again.
-                      </Text>
-                    )
-                  } */}
-                  {/* {
-                      requestState === "completed" && (<Redirect to='/'/>)
-                  } */}
                   {
-                    isLoggedIn  &&(<><Button colorScheme="red" w="920px" variant="outline"
+                    auth.isAuthenticated && auth.authName === creator  &&(<><Button colorScheme="red" w="920px" variant="outline"
                       _hover={{ bg: "red.200", borderColor: "red.200" }} onClick={() => setIsOpen(true)}>
-                      Delete
-                    </Button>
+                      Delete  
+                    </Button>  
             
                     <AlertDialog
                       isOpen={isOpen}
@@ -155,7 +130,7 @@ return (
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialogOverlay>
-                   </AlertDialog>
+                    </AlertDialog>
                    </>)
                   }
               </Stack>

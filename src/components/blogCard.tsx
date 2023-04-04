@@ -1,20 +1,11 @@
 import React, {FC} from 'react';
 import {
   Box,
-  Flex,
-  AspectRatio,
-  Image,
   Text,
-  Link,
   Button,
   Stack,
-  Collapse,
-  Container,
-  Spacer
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-//import BlogExpander from "./blogExpander";
 interface Props {
   id : string,
   name : string,
@@ -23,9 +14,6 @@ interface Props {
 }
 
 export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
-  //const { id,name, description, creator ,time} = props;
-  // const [show, setShow] = React.useState(false);
-  // const handleToggle = () => setShow(!show);
   return (
     <div data-testid = "test-blog-card">
     <Box
@@ -69,7 +57,7 @@ export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
           Show More
         </Button>
       </Stack>
-  </Box>
-  </div>
+   </Box>
+   </div>
 );
 }

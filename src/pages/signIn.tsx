@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import { redirect} from "react-router-dom";
 import {
     Flex,
     Heading,
@@ -7,16 +6,13 @@ import {
     Button,
     InputGroup,
     Stack,
+    InputRightElement,
     InputLeftElement,
     chakra,
     Box,
     Link,
     Avatar,
     FormControl,
-    useToast,
-    FormHelperText,
-    InputRightElement,
-    Text
   } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -34,22 +30,19 @@ interface Props {
 }
 
 export const SignIn : FC<Props> = () => {
-  //const [showPassword, setShowPassword] = useState(false);
-  //const HandleShowClick = () => setShowPassword(!showPassword);
+  const [showPassword, setShowPassword] = useState(false);
+  const HandleShowClick = () => setShowPassword(!showPassword);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [requestState, setRequestState] = useState("not-requested");
   // const toast = useToast();
-  const isLoggedIn = false;
-
   const data = useAppSelector((state: RootState) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const logIn = () => {
-    console.log(data);
     for (let i = 0; i < data.user.length; i++) {
         if(data.user[i].email === email && data.user[i].password === password){
-            console.log('dukse')
             setRequestState('completed');
             dispatch(  
                 authLogin({
@@ -62,7 +55,7 @@ export const SignIn : FC<Props> = () => {
         }
     }
   }
-  if (isLoggedIn){
+  if (data.isAuthenticated){
       return (
         <div>
           <h1>you are already logged in</h1>
@@ -71,14 +64,14 @@ export const SignIn : FC<Props> = () => {
   }
   else
       return (       
-          <Flex    
-              flexDirection="column"         
-              width="100wh"      
+            <Flex          
+              flexDirection="column"           
+              width="100wh"        
               height="100vh"   
               backgroundColor="gray.200"
               justifyContent="center"
               alignItems="center"
-          >
+            >
               <Stack
                   flexDir="column"
                   mb="2"
@@ -117,17 +110,17 @@ export const SignIn : FC<Props> = () => {
                                           children={<CFaLock color="gray.300" />}
                                       />
                                       <Input data-testid = "test-password"
-                                          //type={showPassword ? "text" : "password"}
+                                          type={showPassword ? "text" : "password"}
                                           placeholder="Password"
                                           name="password"
                                           onChange={(e) => setPassword(e.target.value)}
                                           required
                                       />
-                                      {/* <InputRightElement width="4.5rem">
+                                      <InputRightElement width="4.5rem">
                                           <Button h="1.75rem" size="sm" onClick={HandleShowClick}>
                                           {showPassword ? "Hide" : "Show"}
                                           </Button>
-                                      </InputRightElement> */}
+                                      </InputRightElement>
                                   </InputGroup>
                               </FormControl>
                               {/* {
@@ -155,6 +148,6 @@ export const SignIn : FC<Props> = () => {
                   Sign Up
                   </Link>
               </Box>
-          </Flex> 
-  );
+            </Flex> 
+    );
 }

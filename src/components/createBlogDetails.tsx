@@ -1,39 +1,17 @@
 import React, {FC} from 'react';
 import {
-  Flex,
-  Heading,
-  Input,
   Button,
-  InputGroup,
   Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
   useToast,
-  FormHelperText,
-  InputRightElement,
   Text,
-  Spinner,
   Textarea
 }from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux'
-import { nanoid } from '@reduxjs/toolkit'
-
 import { postAdded } from '../slices/blogSlice';
-import { Link as RouterLink } from "react-router-dom";
-
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store';
-
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
 
 interface Props {
 
@@ -46,10 +24,9 @@ export const CreateBlogDetails : FC<Props> = () => {
   const [requestState, setRequestState] = useState("completed");
   const [error,setError] = useState();
   const toast = useToast(); 
-
+  const auth = useAppSelector((state: RootState) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
   const newID = data.length;
 
   const createBlog = (e : any) => {  
@@ -61,7 +38,7 @@ export const CreateBlogDetails : FC<Props> = () => {
             id: newID,
             name,
             description,    
-            creator: 'admin'  
+            creator: auth.authName 
           })    
         )  
         setName('')
@@ -70,7 +47,7 @@ export const CreateBlogDetails : FC<Props> = () => {
       } 
   }
   return (
-      <form onSubmit={createBlog}>    
+      <form onSubmit={createBlog}>      
           <Stack
           spacing={4}   
           p="5rem"
@@ -101,9 +78,6 @@ export const CreateBlogDetails : FC<Props> = () => {
                   {error}
                   </Text>
               )}
-              {/* {
-                  requestState === "completed" &&  navigate('/')
-              } */}
               <Button
                   borderRadius={0}
                   type="submit"

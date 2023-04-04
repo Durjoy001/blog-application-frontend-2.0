@@ -9,18 +9,11 @@ import {
   InputLeftElement,
   chakra,
   Box,
-  Link,
   Avatar,
   FormControl,
-  useToast,
-  FormHelperText,
-  InputRightElement,
-  Text,
-  Spinner
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { userAdded } from '../slices/userSlice';
 import { useNavigate } from 'react-router-dom';
@@ -34,21 +27,11 @@ interface Props {
 }
 
 export const SignUp : FC<Props> = () => {
-  // const [showPassword, setShowPassword] = useState(false);
-  // const handleShowClick = () => setShowPassword(!showPassword);
   const [email, setEmail] = useState('');
-  // //const { isLoggedIn, login } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setpasswordConfirm] = useState('');
   const [requestState, setRequestState] = useState("not-requested");
-  // const [error,setError] = useState([]);
-  // const [nameError, setNameError] = useState(null);
-  // const [passwordError, setPasswordError] = useState(null);
-  // const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  // const [userUniqueError,setUserUniqueError] = useState(null);
-  // const toast = useToast(); 
-
   const data = useAppSelector((state: RootState) => state.users);
   const isLoggedIn = false;
   const dispatch = useDispatch();
@@ -83,14 +66,14 @@ if (isLoggedIn){
     </div>
   )  
 }  
-else    
+else      
   return (         
-      <Flex      
-          flexDirection="column"       
+      <Flex          
+          flexDirection="column"             
           width="100wh"            
           height="100vh"  
           backgroundColor="gray.200"  
-          justifyContent="center"
+          justifyContent="center"  
           alignItems="center"
       >    
           <Stack
@@ -125,16 +108,6 @@ else
                                   />
                               </InputGroup>
                           </FormControl>
-                          {/* {
-                              nameError !== null && (<Text display="block" fontSize="sm" color="red">
-                              {nameError}
-                              </Text>)
-                          }
-                          {
-                              userUniqueError !== null && (<Text display="block" fontSize="sm" color="red">
-                              {userUniqueError}
-                              </Text>)
-                          } */}
                           <FormControl>
                               <InputGroup>
                                   <InputLeftElement
@@ -159,24 +132,13 @@ else
                                       children={<CFaLock color="gray.300" />}
                                   />
                                   <Input  data-testid = "test-password"
-                                      //type={showPassword ? "text" : "password"}
                                       placeholder="Password"
                                       name="password"
                                       onChange={(e) => setPassword(e.target.value)}
                                       required
-                                  />
-                                  {/* <InputRightElement width="4.5rem">
-                                      <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                                      {showPassword ? "Hide" : "Show"}
-                                      </Button>
-                                  </InputRightElement> */}  
+                                  /> 
                               </InputGroup>
                           </FormControl>
-                          {/* {
-                              passwordError !== null && (<Text display="block" fontSize="sm" color="red">
-                              {passwordError}
-                              </Text>)
-                          } */}
                           <FormControl>
                               <InputGroup>
                                   <InputLeftElement
@@ -185,33 +147,13 @@ else
                                       children={<CFaLock color="gray.300" />}
                                   />
                                   <Input data-testid = "test-confirmPassword"
-                                      //type={showPassword ? "text" : "password"}
                                       placeholder="Confirm Password"  
                                       name="passwordConfirm"
                                       onChange={(e) => setpasswordConfirm(e.target.value)}
                                       required
                                   />
-                                  {/* <InputRightElement width="4.5rem">
-                                      <Button h="1.75rem" size="sm" onClick={handleShowClick}>
-                                      {showPassword ? "Hide" : "Show"}
-                                      </Button>
-                                  </InputRightElement> */}
                               </InputGroup>
                           </FormControl>
-                          {/* {
-                              confirmPasswordError !== null && (<Text display="block" fontSize="sm" color="red">
-                              {confirmPasswordError}
-                              </Text>)
-                          } */}
-                          {/* {
-                              requestState === "error" && (
-                              <Text display="block" fontSize="sm" color="red">
-                              Internal server error
-                              </Text>
-                          )} */}
-                          {/* {
-                              requestState === "completed" && (<Redirect to="/login" />)
-                          } */}
                           <Button
                               borderRadius={0}
                               type="submit"  
@@ -220,7 +162,6 @@ else
                               width="full"
                               //disabled={requestState === "loading" ? 1 : 0}
                           >
-                         {/* {requestState === "loading" && <Spinner mr={3} />} */}
                            SignUp
                           </Button>
                       </Stack>
@@ -228,5 +169,5 @@ else
               </Box>
           </Stack>
       </Flex>
-  );
+  );  
 }

@@ -1,58 +1,33 @@
 import React, {FC} from 'react';
 import {
-  Flex,
-  Heading,
-  Input,
   Button,
-  InputGroup,
   Stack,
-  InputLeftElement,
-  chakra,
-  Box,
-  Link,
-  Avatar,
-  FormControl,
   useToast,
-  FormHelperText,
-  InputRightElement,
   Text,
-  Spinner,
   Textarea
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-import { useEffect } from "react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../app/store';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { postUpdated } from './../slices/blogSlice';
 
-const CFaUserAlt = chakra(FaUserAlt);
-const CFaLock = chakra(FaLock);
 interface Props {
 
 }
-
 export const EditBlog : FC<Props> = () => {
   const [loaded,setLoaded] = useState(true);
   const  id  = useParams().id;
-  const [blogs, setBlogs] = useState([]);
-  const [author,setAuthor] = useState("admin");
   const [requestState, setRequestState] = useState("not-requested");
   const [error,setError] = useState();
   const toast = useToast(); 
   const navigate = useNavigate();
-
-  const isLoggedIn = true;
-  const user = "admin";
-
   const data = useAppSelector((state: RootState) => state.blogs);
   var blogID: number = Number(id);
   const Blog = data[blogID]
-
+  const auth = useAppSelector((state: RootState) => state.users);
   const [name,setName] = useState(Blog.name);
   const [description,setDescription] = useState(Blog.description);
   const dispatch = useDispatch()
@@ -67,7 +42,7 @@ export const EditBlog : FC<Props> = () => {
       return <h1>loading...</h1>
   }
   else {
-      if(!isLoggedIn || author !== user){
+      if(!auth.isAuthenticated || auth.authName !== Blog.creator){
           //return <Redirect to={'/blogs/view/' + id }/>
           return (<h1>don't have permission</h1>)
       }
@@ -103,9 +78,6 @@ export const EditBlog : FC<Props> = () => {
                           {error}
                           </Text>
                       )}
-                      {/* {
-                          requestState === "completed" && (<Redirect to={'/blogs/view/' + id }/>)
-                      } */}
                       <Button
                           borderRadius={0}
                           type="submit"
@@ -113,7 +85,7 @@ export const EditBlog : FC<Props> = () => {
                           colorScheme="teal"
                           width="full"
                       >
-                      UPDATE
+                        UPDATE
                       </Button>
                   </Stack>
               </form>
