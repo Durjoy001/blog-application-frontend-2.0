@@ -69,9 +69,9 @@ if (isLoggedIn){
 else      
   return (         
       <Flex          
-          flexDirection="column"             
+          flexDirection="column"               
           width="100wh"            
-          height="100vh"  
+          height="100vh"    
           backgroundColor="gray.200"  
           justifyContent="center"  
           alignItems="center"
