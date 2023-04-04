@@ -77,7 +77,7 @@ else
           alignItems="center"
       >    
           <Stack
-              flexDir="column"
+              flexDir="column"   
               mb="2"  
               justifyContent="center"
               alignItems="center"
@@ -89,7 +89,7 @@ else
                       <Stack
                           spacing={4}
                           p="1rem"
-                          backgroundColor="whiteAlpha.900"
+                          backgroundColor="whiteAlpha.900"  
                           boxShadow="md"
                       >
                           <FormControl>
