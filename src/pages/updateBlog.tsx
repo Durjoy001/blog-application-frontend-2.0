@@ -4,9 +4,9 @@ import { EditBlog } from '../components/editBlog';
 interface Props {
 }
 
-export const updateBlog : FC<Props> = () => {
+export const UpdateBlog : FC<Props> = () => {
   return (
-    <div>
+    <div data-testid = "update-blog">
        <EditBlog />
     </div>  
   );  

@@ -43,7 +43,7 @@ export const SignUp : FC<Props> = () => {
     setRequestState("completed");  
     if (name && email && password && passwordConfirm) {  
       dispatch(  
-        userAdded({  
+        userAdded({    
           id: newID,
           name,
           email,    
@@ -59,7 +59,7 @@ export const SignUp : FC<Props> = () => {
     } 
   }
   
-if (isLoggedIn){  
+if (data.isAuthenticated){  
   return (
     <div>  
       <h1>you are already logged in</h1>  
@@ -69,7 +69,7 @@ if (isLoggedIn){
 else      
   return (         
       <Flex          
-          flexDirection="column"               
+          flexDirection="column"                   
           width="100wh"            
           height="100vh"    
           backgroundColor="gray.200"  
@@ -78,9 +78,9 @@ else
       >    
           <Stack
               flexDir="column"   
-              mb="2"  
+              mb="2"    
               justifyContent="center"
-              alignItems="center"
+              alignItems="center"  
           >
               <Avatar bg="teal.500" />
               <Heading color="teal.400">Welcome</Heading>
@@ -89,7 +89,7 @@ else
                       <Stack
                           spacing={4}
                           p="1rem"
-                          backgroundColor="whiteAlpha.900"  
+                          backgroundColor="whiteAlpha.900"    
                           boxShadow="md"
                       >
                           <FormControl>

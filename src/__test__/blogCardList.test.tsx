@@ -2,6 +2,9 @@ import * as ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import { BlogCardList } from '../components/blogCardList';
 import React from 'react';
+import { Provider } from 'react-redux';
+import { store }  from './../app/store'
+import { MemoryRouter } from 'react-router-dom';
 
 describe('blogcard list test', () => {
 
@@ -20,7 +23,13 @@ describe('blogcard list test', () => {
               creator: "Jane Smith",
             },
           ];
-          render(<BlogCardList Blogs = {blogs} />);
+          render(
+            <MemoryRouter>
+              <Provider store={store}>
+                <BlogCardList Blogs = {blogs} />
+              </Provider>
+            </MemoryRouter>);
+
           const postList = screen.getByTestId("test");
           expect(postList).toBeInTheDocument();
           for (let i = 0; i < blogs.length; i++) {

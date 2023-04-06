@@ -2,6 +2,9 @@ import * as ReactDOM from 'react-dom';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { BlogCard } from '../components/blogCard';
+import { Provider } from 'react-redux';
+import { store }  from './../app/store'
+import { MemoryRouter } from 'react-router-dom';
 
 describe('blog card testing', () => {
     const blogs = [
@@ -13,7 +16,12 @@ describe('blog card testing', () => {
         }
       ];
     test('renders blog title and content', () => {
-          render(<BlogCard {...blogs[0]}/>);
+          render(
+            <MemoryRouter>
+              <Provider store={store}>
+                <BlogCard {...blogs[0]}/>
+              </Provider>
+            </MemoryRouter>);
           const postList = screen.getByTestId("test-blog-card");
           expect(postList).toBeInTheDocument();
           const postTitle = screen.getByText(blogs[0].name);
@@ -21,7 +29,12 @@ describe('blog card testing', () => {
       });
 
     test('render button', () => {
-        render(<BlogCard {...blogs[0]}/>);
+        render(
+          <MemoryRouter>
+            <Provider store={store}>
+              <BlogCard {...blogs[0]}/>
+            </Provider>
+          </MemoryRouter>);
         const button = screen.getByText("Show More");
         expect(button).toBeInTheDocument();
     })

@@ -6,7 +6,7 @@ interface Props {
 
 export const CreateBlog : FC<Props> = () => {
   return (
-    <div>
+    <div data-testid = "create-blog">
        <CreateBlogDetails />
     </div>
   );

@@ -24,7 +24,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { postDeleted } from './../slices/blogSlice';
 
 interface Props {
-  id : string,
+  id : string,  
   name : string,
   description: string,
   creator : string
@@ -44,12 +44,12 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const deleteBlog = (e : any) =>{
     e.preventDefault();    
     setRequestState("completed");
-    dispatch(postDeleted(id))
+    dispatch(postDeleted(id))  
     navigate('/')
   }  
 return (
-    <ChakraProvider>  
-      <Container maxW="80rem" centerContent>  
+    <ChakraProvider>    
+      <Container maxW="80rem" centerContent>      
         <SimpleGrid columns={[1, 1, 1, 1]}>              
             <Box 
               p={4}
@@ -58,7 +58,7 @@ return (
               //maxWidth="62rem"
               borderWidth={1}
               margin={2}  
-              padding="2rem"
+              padding="2rem"  
             >
               <Stack
                 align={{ base: "center", md: "stretch" }}
@@ -103,7 +103,7 @@ return (
                     auth.isAuthenticated && auth.authName === creator  &&(<><Button colorScheme="red" w="920px" variant="outline"
                       _hover={{ bg: "red.200", borderColor: "red.200" }} onClick={() => setIsOpen(true)}>
                       Delete  
-                    </Button>  
+                    </Button>       
             
                     <AlertDialog
                       isOpen={isOpen}

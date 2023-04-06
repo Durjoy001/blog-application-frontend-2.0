@@ -41,6 +41,7 @@ export const SignIn : FC<Props> = () => {
   const dispatch = useDispatch();
 
   const logIn = () => {
+    console.log('login')
     for (let i = 0; i < data.user.length; i++) {
         if(data.user[i].email === email && data.user[i].password === password){
             setRequestState('completed');
@@ -65,11 +66,11 @@ export const SignIn : FC<Props> = () => {
   else
       return (       
             <Flex          
-              flexDirection="column"           
+              flexDirection="column"             
               width="100wh"        
               height="100vh"   
               backgroundColor="gray.200"
-              justifyContent="center"
+              justifyContent="center"  
               alignItems="center"
             >
               <Stack

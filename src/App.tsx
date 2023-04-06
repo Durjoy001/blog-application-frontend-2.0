@@ -12,7 +12,7 @@ import { SignIn } from "./pages/signIn";
 import { Blogs } from "./pages/blogs";
 import { CreateBlog } from "./pages/createBlog";
 import { BlogView } from "./pages/blogView";
-import { updateBlog } from "./pages/updateBlog";
+import { UpdateBlog } from "./pages/updateBlog";
 import { Navbar } from "./components/navbar";
 
 const App : FC = () =>{
@@ -25,7 +25,7 @@ const App : FC = () =>{
              <Route path="/" Component= {Blogs} />
              <Route path="/blogs" Component={CreateBlog} />
              <Route path="/blogs/view/:id" Component={BlogView} />
-             <Route path="/blogs/:id" Component={updateBlog} />
+             <Route path="/blogs/:id" Component={UpdateBlog} />
          </Routes>
      </Router>
   );

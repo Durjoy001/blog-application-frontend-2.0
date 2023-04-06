@@ -10,12 +10,12 @@ interface Props {
 export const Blogs : FC<Props> = () => {
   const blogs = useAppSelector((state: RootState) => state.blogs);
   return (
-    <div data-testid = "home-page-test">
+    <div data-testid = "home-page-test">  
     <ChakraProvider>
-      <Container maxW="80rem" centerContent>  
+      <Container maxW="80rem" centerContent>    
         <SimpleGrid columns={[1, 1, 1, 1]}>
            <BlogCardList Blogs = {blogs} />
-        </SimpleGrid>
+        </SimpleGrid>  
       </Container>  
     </ChakraProvider>   
     </div>

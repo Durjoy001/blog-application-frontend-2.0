@@ -12,7 +12,7 @@ export const BlogView : FC<Props> = () => {
   const {id}   = useParams ();
   var blogID: number = Number(id);
   return (
-    <div>
+    <div data-testid = "single-blog-view" >
       <BlogDetails {...data[blogID]}/>
     </div>
   );  
