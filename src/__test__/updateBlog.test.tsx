@@ -2,14 +2,16 @@ import { UpdateBlog } from '../pages/updateBlog';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store }  from './../app/store'
-import { MemoryRouter } from 'react-router-dom';
+import { Routes, Route, MemoryRouter } from 'react-router-dom';
 
 describe('single blog view page test', () => {
     test('should render', () => {
         render(
-            <MemoryRouter>
+            <MemoryRouter initialEntries={['/blogs/1']} initialIndex={0}>
               <Provider store={store}>
-                <UpdateBlog/>
+                  <Routes>
+                   <Route path="/blogs/:id" Component={UpdateBlog} />
+                  </Routes>
               </Provider>
             </MemoryRouter>);
         

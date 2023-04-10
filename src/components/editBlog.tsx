@@ -41,6 +41,9 @@ export const EditBlog : FC<Props> = () => {
   if(!loaded){
       return <h1>loading...</h1>
   }
+  else if (!Blog) {
+    return <h1>Blog not found</h1>;
+  }
   else {
       if(!auth.isAuthenticated || auth.authName !== Blog.creator){
           //return <Redirect to={'/blogs/view/' + id }/>
@@ -52,10 +55,10 @@ export const EditBlog : FC<Props> = () => {
                   <Stack
                       spacing={4}
                       p="5rem"
-                      backgroundColor="whiteAlpha.900"
-                      boxShadow="md"
-                  >
-                      <Textarea
+                      backgroundColor="whiteAlpha.900"  
+                      boxShadow="md"  
+                  > 
+                      <Textarea 
                           rows={3}
                           variant="outline"
                           name="name"

@@ -20,7 +20,7 @@ export const Navbar : FC<Props> = () => {
   const handleToggle = () => (isOpen ? onClose() : onOpen());
   const data = useAppSelector((state: RootState) => state.users);
   return (
-    <Flex
+    <Flex  
       as="nav"
       align="center"
       justify="space-between"  
@@ -30,9 +30,9 @@ export const Navbar : FC<Props> = () => {
       color="white"
       //{...Props}
     >
-      <Flex align="center" mr={5}>
+      <Flex data-testid = "navbar-test" align="center" mr={5}>    
         <Text as = {RouterLink} to="/">
-          <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+          <Heading as="h1" size="lg" letterSpacing={"tighter"}>  
             Blog Application  
           </Heading>
         </Text>
@@ -66,9 +66,9 @@ export const Navbar : FC<Props> = () => {
             variant="outline"
             _hover={{ bg: "teal.700", borderColor: "teal.700" }}
           >
-            LogIn or SignUp
+            LogIn or SignUp    
           </Button>)
-        }
+        }  
         {/* {
           isLoggedIn && (<Button onClick={logout}
           variant="outline"
