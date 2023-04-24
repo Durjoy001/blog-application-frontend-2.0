@@ -13,6 +13,7 @@ describe('blog card testing', () => {
           name: "My First Blog Post",
           description: "<p>This is my first blog post. Welcome to my blog!</p>",
           creator: "John Doe",
+          time : "1/2/3"
         }
       ];
     test('renders blog title and content', () => {

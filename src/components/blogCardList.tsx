@@ -7,7 +7,8 @@ interface blog {
   id : string,
   name : string,
   description: string,
-  creator : string
+  creator : string,
+  time : string
 }
 
 interface Props {
@@ -20,7 +21,7 @@ export const BlogCardList : FC<Props> = ({Blogs}) => {
     <ChakraProvider>
     <Container maxW="80rem" centerContent>
       <SimpleGrid columns={[1, 1, 1, 1]}>
-         {Blogs.map((blog) => (
+         {Blogs && Blogs.map((blog) => (
              <BlogCard {...blog} /> 
          ))}
       </SimpleGrid>

@@ -10,10 +10,11 @@ interface Props {
   id : string,
   name : string,
   description: string,
-  creator : string
+  creator : string,
+  time : string
 }
 
-export const BlogCard : FC<Props> = ({id, name , description , creator}) => {
+export const BlogCard : FC<Props> = ({id, name , description , creator, time}) => {
   return (
     <div data-testid = "test-blog-card">
     <Box

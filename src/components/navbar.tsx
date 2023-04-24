@@ -14,20 +14,20 @@ import { RootState } from '../app/store'
 interface Props {
     
 }
-
+  
 export const Navbar : FC<Props> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
-  const data = useAppSelector((state: RootState) => state.users);
+  const data = useAppSelector((state: RootState) => state.users);  
   return (
     <Flex  
-      as="nav"
+      as="nav"    
       align="center"
       justify="space-between"  
       wrap="wrap"
       padding={6}
       bg="teal.500"
-      color="white"
+      color="white"  
       //{...Props}
     >
       <Flex data-testid = "navbar-test" align="center" mr={5}>    

@@ -15,12 +15,14 @@ describe('blogcard list test', () => {
               name: "My First Blog Post",
               description: "<p>This is my first blog post. Welcome to my blog!</p>",
               creator: "John Doe",
+              time : "1/5/9"
             },
             {
               id: "2",
               name: "My Second Blog Post",
               description: "<p>This is my second blog post. Thanks for reading!</p>",
               creator: "Jane Smith",
+              time : "1/5/8"
             },
           ];
           render(
