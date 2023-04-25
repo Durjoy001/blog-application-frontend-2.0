@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
   Button,
   Stack,
@@ -13,50 +13,75 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../app/store';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { postUpdated } from './../slices/blogSlice';
+import { useUpdateBlogMutation } from '../api/blogApi';
+import { useGetBlogQuery } from '../api/blogApi';
+
 
 interface Props {
 
 }
+interface data {
+  id : string,  
+  name : string,
+  description: string,
+  creator : string
+}
 export const EditBlog : FC<Props> = () => {
   const [loaded,setLoaded] = useState(true);
-  const  id  = useParams().id;
+  const  {id}  = useParams();
   const [requestState, setRequestState] = useState("not-requested");
   const [error,setError] = useState();
   const toast = useToast(); 
   const navigate = useNavigate();
-  const data = useAppSelector((state: RootState) => state.blogs);
-  var blogID: number = Number(id);
-  const Blog = data[blogID]
-  const auth = useAppSelector((state: RootState) => state.users);
-  const [name,setName] = useState(Blog.name);
-  const [description,setDescription] = useState(Blog.description);
+  const {data,isLoading} = useGetBlogQuery(id);
+  //const data = useAppSelector((state: RootState) => state.blogs);
+  //var blogID: number = Number(id);
+ // const Blog = data[blogID]
+  //const auth = useAppSelector((state: RootState) => state.users);
+  console.log(data)
+  const [name,setName] = useState('');
+  const [description,setDescription] = useState('');
   const dispatch = useDispatch()
+  const [updateBlog] = useUpdateBlogMutation();
+  const { username,loggedIn,access_token } = useAppSelector(
+    (state: RootState) => state.auth
+  );
+  useEffect (() => {
+    setDescription(data?.description);
+    setName(data?.name)
+  },[data])
 
-  const updateBlog = (e : any) =>{
-    if (name && description) {
-      dispatch(postUpdated({ id: blogID, name, description }))
-      navigate('/blogs/view/' + id )
-    }
+  const updateblog = async (e : any) =>{
+    e.preventDefault()
+    console.log(id)
+    const request = {id,name,description,access_token}
+      try {
+        await updateBlog(request).unwrap();
+        navigate(`/blogs/view/${id}`);
+        //setOpen(false);
+      } catch (error : any) {
+        console.log(error);
+      }
   }
-  if(!loaded){
+  if(isLoading){
       return <h1>loading...</h1>
   }
-  else if (!Blog) {
+  else if (!data) {
     return <h1>Blog not found</h1>;
   }
   else {
-      if(!auth.isAuthenticated || auth.authName !== Blog.creator){
+      if(!loggedIn || username !== data.creator){
           //return <Redirect to={'/blogs/view/' + id }/>
           return (<h1>don't have permission</h1>)
       }
       else{
           return (
-              <form onSubmit={updateBlog}>  
+              <form onSubmit={updateblog}>  
                   <Stack
                       spacing={4}
                       p="5rem"
                       backgroundColor="whiteAlpha.900"  
-                      boxShadow="md"  
+                      boxShadow="md"    
                   > 
                       <Textarea 
                           rows={3}
@@ -69,7 +94,7 @@ export const EditBlog : FC<Props> = () => {
                       />
                       <Textarea
                           rows={10}
-                          value = {description}
+                          value = {description}  
                           variant="outline"
                           name= "description"
                           onChange={(e) => setDescription(e.target.value)}

@@ -15,8 +15,8 @@ const usersSlice = createSlice({
       state.user.push(action.payload)
     },
     authLogin(state,action){  
-      const {email,password} = action.payload
-      const existingAuth = state.user.find(user => user.email === email)
+      const {name,password} = action.payload
+      const existingAuth = state.user.find(user => user.name === name)
       state.isAuthenticated = true;
       state.authName = existingAuth?.name || '';
     }

@@ -19,6 +19,7 @@ import { userAdded } from '../slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store'
+import { useSignUpMutation } from '../api/blogApi';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -37,20 +38,21 @@ export const SignUp : FC<Props> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const newID = data.user.length;
+  const [signup, { isLoading }] = useSignUpMutation()
 
-  const signUp = (e : any) => {
+  const signUp = async (e : any) => {
     e.preventDefault();  
     setRequestState("completed");  
     if (name && email && password && passwordConfirm) {  
-      dispatch(  
-        userAdded({    
-          id: newID,
-          name,
-          email,    
-          password,
-          passwordConfirm 
-        })    
-      )  
+        await signup({
+            name,
+            email,
+            password,
+            passwordConfirm
+          }).unwrap() .then(() => {
+              navigate("/signin");
+        }); 
+        
       setName('');
       setEmail('');
       setPassword('');
@@ -68,15 +70,15 @@ if (data.isAuthenticated){
 }  
 else      
   return (         
-      <Flex          
+      <Flex              
           flexDirection="column"                   
-          width="100wh"            
-          height="100vh"    
+          width="100wh"                  
+          height="100vh"      
           backgroundColor="gray.200"  
-          justifyContent="center"  
+          justifyContent="center"    
           alignItems="center"
-      >    
-          <Stack
+      >      
+          <Stack   
               flexDir="column"   
               mb="2"    
               justifyContent="center"

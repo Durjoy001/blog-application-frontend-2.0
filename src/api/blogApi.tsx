@@ -7,36 +7,72 @@ import {
     UpdateBlog,
   } from "../models/blogModel";
 
+  import {
+    SignInPayload,
+    SignUpPayload,
+    RefreshToken,
+    AccessToken,
+    SignInResponse,
+  } from "../models/authModel";
+
 export const blogApi = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/v1/" }),
+    tagTypes: ["Blogs"],
     endpoints: builder => ({
       getBlogs: builder.query<any, void>({
-        query: () => '/blogs'
+        query: () => '/blogs',
+        providesTags: ['Blogs']
       }),
       getBlog: builder.query<any, string | undefined>({
-        query: id => `/blogs/${id}`
+        query: id => `/blogs/${id}`,
+        providesTags: ['Blogs']
       }),
-      addNewBlog: builder.mutation({
-        query: initialPost => ({
-          url: '/blogs',
-          method: 'POST',
-          // Include the entire post object as the body of the request
-          body: initialPost
-        })
+      addNewBlog: builder.mutation<void,any>({
+        query: ({name,description,access_token}) => ({
+          url: '/blogs' ,
+          method: 'POST' ,
+          body: {name,description},
+          headers: {Authorization : `Bearer ${access_token}`},
+        }),
+        invalidatesTags: ['Blogs']
       }),
-      updateBlog: builder.mutation({
-        query: ({ id, ...rest }) => ({
-          url: `/blogs/${id}`,
-          method: "PUT",
-          body: rest,
-        })
+      updateBlog: builder.mutation<void,any>({
+        query: ({id,name,description,access_token}) => ({
+          url: `/blogs/${id}` ,
+          method: 'PATCH' ,
+          body: {name,description},
+          headers: {Authorization : `Bearer ${access_token}`},
+        }),
+        invalidatesTags: ['Blogs']
       }),
       deleteBlog: builder.mutation({
         query: (id) => ({
           url: `/blogs/${id}`,
           method: "DELETE",
-        })
+        }),
+        invalidatesTags: ['Blogs']
+      }),
+      signIn: builder.mutation<any, any>({
+        query: (body) => ({
+          url: "/users/login",
+          method: "POST",
+          body,
+        }),
+      }),
+      signUp: builder.mutation({
+        query: (body) => ({
+          url: "/users/signup",
+          method: "POST",
+          body,
+        }),
+      }),
+      signOut: builder.mutation<void, void>({
+        query: () => ({
+          url: "/users/logout",
+          method: "POST",
+          body: { refresh_token: localStorage.getItem("refresh_token") || null },
+        }),
       }),
     })
   })
@@ -46,5 +82,8 @@ export const blogApi = createApi({
     useGetBlogQuery,
     useAddNewBlogMutation,
     useUpdateBlogMutation,
-    useDeleteBlogMutation
+    useDeleteBlogMutation,
+    useSignInMutation,
+    useSignUpMutation, 
+    useSignOutMutation
   } = blogApi

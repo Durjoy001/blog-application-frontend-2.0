@@ -22,6 +22,8 @@ import { RootState } from '../app/store';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authLogin } from '../slices/userSlice';
+import { setUser } from '../slices/authSlice';
+import { useSignInMutation } from '../api/blogApi';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
@@ -32,39 +34,43 @@ interface Props {
 export const SignIn : FC<Props> = () => {
   const [showPassword, setShowPassword] = useState(false);
   const HandleShowClick = () => setShowPassword(!showPassword);
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [requestState, setRequestState] = useState("not-requested");
   // const toast = useToast();
-  const data = useAppSelector((state: RootState) => state.users);
+  //const data = useAppSelector((state: RootState) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [signIn] = useSignInMutation();
 
-  const logIn = () => {
-    console.log('login')
-    for (let i = 0; i < data.user.length; i++) {
-        if(data.user[i].email === email && data.user[i].password === password){
-            setRequestState('completed');
-            dispatch(  
-                authLogin({
-                  email,    
-                  password,
-                })    
-              )  
-            navigate('/');
-            return;
-        }
-    }
+  const logIn = async (e : any) => {
+    e.preventDefault();
+    try {
+        await signIn({ name, password })
+          .unwrap()
+          .then((data) => {
+            dispatch(
+              setUser({
+                name,
+                loggedIn: true,
+                access_token: data?.accessToken,
+                refresh_token: data?.refToken,
+              })
+            );
+            navigate("/");
+          });
+      } catch (err: any) {
+        console.log(err);
+      }
   }
-  if (data.isAuthenticated){
-      return (
-        <div>
-          <h1>you are already logged in</h1>
-        </div>
-      )
-  }
-  else
-      return (       
+//   if (data.isAuthenticated){
+//       return (
+//         <div>
+//           <h1>you are already logged in</h1>
+//         </div>
+//       )
+//   }
+return (       
             <Flex          
               flexDirection="column"             
               width="100wh"        
@@ -82,7 +88,7 @@ export const SignIn : FC<Props> = () => {
                   <Avatar bg="teal.500" />
                   <Heading color="teal.400">Welcome!</Heading>
                   <Box minW={{ base: "90%", md: "468px" }}>
-                      <form onSubmit={logIn}>
+                      <form onSubmit={(e:any)=>logIn(e)}>
                           <Stack
                               spacing={4}
                               p="1rem"
@@ -96,9 +102,9 @@ export const SignIn : FC<Props> = () => {
                                           children={<CFaUserAlt color="gray.300" />}
                                       />
                                       <Input data-testid = "test-email" type="text"
-                                          placeholder="Email"
-                                          name="email"
-                                          onChange={(e) => setEmail(e.target.value)}
+                                          placeholder="Name"
+                                          name="name"
+                                          onChange={(e) => setName(e.target.value)}
                                           required
                                       />
                                   </InputGroup>

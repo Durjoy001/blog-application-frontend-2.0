@@ -35,7 +35,10 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const toast = useToast(); 
   const [isOpen, setIsOpen] = React.useState(false)
   const onClose = () => setIsOpen(false)
-  const auth = useAppSelector((state: RootState) => state.users);
+  //const auth = useAppSelector((state: RootState) => state.users);
+  const { username, loggedIn } = useAppSelector(
+    (state: RootState) => state.auth
+  );
   const cancelRef = React.useRef<null | HTMLButtonElement>(null);
 
   const navigate = useNavigate();
@@ -71,7 +74,7 @@ return (
                   textTransform="uppercase"
                   fontSize="lg"
                   letterSpacing="wide"
-                  color="teal.600"
+                  color="teal.600"  
                 >
                   {name}
                 </Text>
@@ -91,7 +94,7 @@ return (
                   {"Created at: " + blogs.time}
                 </Text> */}
                   {
-                    auth.isAuthenticated && auth.authName === creator &&  (<Button as = {RouterLink} to= {`/blogs/${id}`}
+                    loggedIn && username === creator &&  (<Button as = {RouterLink} to= {`/blogs/${id}`}
                         w="920px"
                         variant="outline"
                         _hover={{ bg: "teal.700", borderColor: "teal.700" }}
@@ -100,15 +103,15 @@ return (
                     </Button>)
                   }
                   {
-                    auth.isAuthenticated && auth.authName === creator  &&(<><Button colorScheme="red" w="920px" variant="outline"
+                    loggedIn && username === creator  &&(<><Button colorScheme="red" w="920px" variant="outline"
                       _hover={{ bg: "red.200", borderColor: "red.200" }} onClick={() => setIsOpen(true)}>
                       Delete  
-                    </Button>       
-            
+                    </Button>         
+              
                     <AlertDialog
                       isOpen={isOpen}
                       leastDestructiveRef={cancelRef}
-                      onClose={onClose}
+                      onClose={onClose}  
                     >
                       <AlertDialogOverlay>
                         <AlertDialogContent>

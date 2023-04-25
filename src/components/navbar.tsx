@@ -11,6 +11,15 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store'
+import { removeUser } from '../slices/authSlice';
+import { useSignOutMutation } from '../api/blogApi';
+
+
+declare global {
+  interface Window {
+    localStorage: Storage;
+  }
+}
 interface Props {
     
 }
@@ -18,15 +27,32 @@ interface Props {
 export const Navbar : FC<Props> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
-  const data = useAppSelector((state: RootState) => state.users);  
+  //const data = useAppSelector((state: RootState) => state.users);  
+  const { username, loggedIn } = useAppSelector(
+    (state: RootState) => state.auth
+  );
+
+  //const name: string = window.localStorage.getItem("username") || "";
+  //const loggedIn: boolean = window.localStorage.getItem("loggedIn") ? true : false;
+  
+  //console.log(name)
+  //const name: localStorage.getItem("name") || "";
+  //const loggedIn: localStorage.getItem("loggedIn") ? true : false;
+  const [signOut] = useSignOutMutation();
+  const dispatch = useAppDispatch();
+  const logout = async () => {
+    await signOut();
+    dispatch(removeUser());
+  };
+
   return (
-    <Flex  
+    <Flex     
       as="nav"    
       align="center"
       justify="space-between"  
       wrap="wrap"
-      padding={6}
-      bg="teal.500"
+      padding={6}  
+      bg="teal.500"  
       color="white"  
       //{...Props}
     >
@@ -40,28 +66,28 @@ export const Navbar : FC<Props> = () => {
 
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
         <HamburgerIcon />
-      </Box>  
+      </Box>    
 
       <Box
-        display={{ base: isOpen ? "block" : "none", md: "block" }}  
+        display={{ base: isOpen ? "block" : "none", md: "block" }}    
         mt={{ base: 4, md: 0 }}
-      >
-        { data.isAuthenticated && (
+      >  
+        { loggedIn && (
             <Button
               variant="outline"
               _hover={{ bg: "teal.700", borderColor: "teal.700" }}
             >
-              { data.authName }  
+              { username }  
             </Button> )
         }
-        { data.isAuthenticated && (<Button as = {RouterLink} to="/blogs"
+        { loggedIn && (<Button as = {RouterLink} to="/blogs"
             variant="outline"
             _hover={{ bg: "teal.700", borderColor: "teal.700" }}
           >
             Create Blog
           </Button>)
         }
-        { !data.isAuthenticated && 
+        { !loggedIn && 
           (<Button as = {RouterLink} to="/signin"
             variant="outline"
             _hover={{ bg: "teal.700", borderColor: "teal.700" }}
@@ -69,14 +95,14 @@ export const Navbar : FC<Props> = () => {
             LogIn or SignUp    
           </Button>)
         }  
-        {/* {
-          isLoggedIn && (<Button onClick={logout}
+        {
+          loggedIn && (<Button onClick={logout}  
           variant="outline"
-          _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+          _hover={{ bg: "teal.700", borderColor: "teal.700" }}  
           >
             Log Out
           </Button>)
-        } */}
+        }
       </Box>
     </Flex>
   );

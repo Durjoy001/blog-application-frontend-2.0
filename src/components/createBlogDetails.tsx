@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { postAdded } from '../slices/blogSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store';
+import { useAddNewBlogMutation } from '../api/blogApi';
 
 interface Props {
 
@@ -20,31 +21,34 @@ interface Props {
 export const CreateBlogDetails : FC<Props> = () => {
   const [name,setName] = useState('');
   const [description,setDescription] = useState('');
-  const data = useAppSelector((state: RootState) => state.blogs);
+  //const data = useAppSelector((state: RootState) => state.blogs);
   const [requestState, setRequestState] = useState("completed");
   const [error,setError] = useState();
   const toast = useToast(); 
   const auth = useAppSelector((state: RootState) => state.users);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const newID = data.length;
+  //const newID = data.length;
+  const [addBlog] = useAddNewBlogMutation();
+  const { access_token } = useAppSelector(
+    (state: RootState) => state.auth
+  );
 
-  const createBlog = (e : any) => {  
+  const createBlog  = async (e : any) => {  
       e.preventDefault();
-      setRequestState("completed");  
-      if (name && description) {  
-        dispatch(
-          postAdded({  
-            id: newID,
-            name,
-            description,    
-            creator: auth.authName 
-          })    
-        )  
+      const request = {
+        access_token,
+        name,
+        description
+    }
+    try {
+        await addBlog(request).unwrap()
         setName('')
         setDescription('')
-        navigate('/');  
-      } 
+        navigate("/");
+    } catch (error: any) {
+      console.log(error)
+    }
   }
   return (
       <form onSubmit={createBlog}>      
