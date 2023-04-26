@@ -15,6 +15,8 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { postUpdated } from './../slices/blogSlice';
 import { useUpdateBlogMutation } from '../api/blogApi';
 import { useGetBlogQuery } from '../api/blogApi';
+import { useGenerateAccessTokenMutation } from '../api/blogApi';
+import { setNewAccessToken, setUser } from '../slices/authSlice';
 
 
 interface Props {
@@ -34,20 +36,17 @@ export const EditBlog : FC<Props> = () => {
   const toast = useToast(); 
   const navigate = useNavigate();
   const {data,isLoading} = useGetBlogQuery(id);
-  //const data = useAppSelector((state: RootState) => state.blogs);
-  //var blogID: number = Number(id);
- // const Blog = data[blogID]
-  //const auth = useAppSelector((state: RootState) => state.users);
   console.log(data)
   const [name,setName] = useState('');
   const [description,setDescription] = useState('');
   const dispatch = useDispatch()
   const [updateBlog] = useUpdateBlogMutation();
+  const [generateAccessToken] = useGenerateAccessTokenMutation();
   const { username,loggedIn,access_token } = useAppSelector(
     (state: RootState) => state.auth
   );
   useEffect (() => {
-    setDescription(data?.description);
+    setDescription(data?.description);  
     setName(data?.name)
   },[data])
 
@@ -58,9 +57,23 @@ export const EditBlog : FC<Props> = () => {
       try {
         await updateBlog(request).unwrap();
         navigate(`/blogs/view/${id}`);
-        //setOpen(false);
       } catch (error : any) {
-        console.log(error);
+        if (error.originalStatus === 500 || error.originalStatus === 401) {
+          const userRefreshToken = localStorage.getItem('refresh_token');
+          const response = await generateAccessToken(userRefreshToken).unwrap()
+          dispatch(setNewAccessToken({
+              access_token: response?.newAccessToken,
+          }))
+          let request = {
+              id,name,description,access_token: response?.newAccessToken,
+          }
+          try {
+            await updateBlog(request).unwrap();
+            navigate(`/blogs/view/${id}`);
+          } catch (error) {
+  
+          }
+        }
       }
   }
   if(isLoading){
@@ -71,7 +84,7 @@ export const EditBlog : FC<Props> = () => {
   }
   else {
       if(!loggedIn || username !== data.creator){
-          //return <Redirect to={'/blogs/view/' + id }/>
+          //return <Redirect to={'/blogs/view/' + id }/>  
           return (<h1>don't have permission</h1>)
       }
       else{

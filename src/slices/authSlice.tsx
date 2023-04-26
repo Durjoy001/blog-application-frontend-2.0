@@ -15,10 +15,10 @@ const authSlice = createSlice({
       state.access_token = action.payload.access_token;
     },
     setUser: (state: AuthState, action: PayloadAction<any>) => {
-      state.username = action.payload.name;
+      state.username = action.payload.username;
       state.loggedIn = action.payload.loggedIn;
       state.access_token = action.payload.access_token;
-      localStorage.setItem("username", action.payload.name!);
+      localStorage.setItem("username", action.payload.username);
       localStorage.setItem("loggedIn", "true");
       localStorage.setItem("refresh_token", action.payload.refresh_token!);
     },

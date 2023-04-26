@@ -13,6 +13,8 @@ import { postAdded } from '../slices/blogSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store';
 import { useAddNewBlogMutation } from '../api/blogApi';
+import { useGenerateAccessTokenMutation } from '../api/blogApi';
+import { setNewAccessToken, setUser } from '../slices/authSlice';
 
 interface Props {
 
@@ -30,7 +32,8 @@ export const CreateBlogDetails : FC<Props> = () => {
   const navigate = useNavigate();
   //const newID = data.length;
   const [addBlog] = useAddNewBlogMutation();
-  const { access_token } = useAppSelector(
+  const [generateAccessToken] = useGenerateAccessTokenMutation();
+  const {username, access_token } = useAppSelector(
     (state: RootState) => state.auth
   );
 
@@ -38,7 +41,7 @@ export const CreateBlogDetails : FC<Props> = () => {
       e.preventDefault();
       const request = {
         access_token,
-        name,
+        name, 
         description
     }
     try {
@@ -47,8 +50,28 @@ export const CreateBlogDetails : FC<Props> = () => {
         setDescription('')
         navigate("/");
     } catch (error: any) {
-      console.log(error)
-    }
+      if (error.originalStatus === 500 || error.originalStatus === 401) {
+        const userRefreshToken = localStorage.getItem('refresh_token');
+        const response = await generateAccessToken(userRefreshToken).unwrap()
+        dispatch(setNewAccessToken({
+            access_token: response?.newAccessToken,
+        }))
+        let request = {
+            access_token: response?.newAccessToken,
+            name,
+            description
+        }
+        try {
+            await addBlog(request).unwrap()
+            setName('')
+            setDescription('')
+            navigate("/");
+        } catch (error) {
+
+        }
+
+      }
+    };
   }
   return (
       <form onSubmit={createBlog}>      

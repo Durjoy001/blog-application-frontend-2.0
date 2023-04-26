@@ -23,6 +23,8 @@ import { RootState } from '../app/store';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { postDeleted } from './../slices/blogSlice';
 import { useDeleteBlogMutation } from '../api/blogApi';
+import { useGenerateAccessTokenMutation } from '../api/blogApi';
+import { setNewAccessToken, setUser } from '../slices/authSlice';
 
 interface Props {
   id : string,  
@@ -36,6 +38,7 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const toast = useToast(); 
   const [isOpen, setIsOpen] = React.useState(false)
   const onClose = () => setIsOpen(false)
+  const [generateAccessToken] = useGenerateAccessTokenMutation();
   //const auth = useAppSelector((state: RootState) => state.users);
   const { username, loggedIn , access_token } = useAppSelector(
     (state: RootState) => state.auth
@@ -43,7 +46,7 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const cancelRef = React.useRef<null | HTMLButtonElement>(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
   const [deleteblog] = useDeleteBlogMutation();
 
   const deleteBlog = async (e : any) =>{
@@ -53,23 +56,39 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
       await deleteblog(request).unwrap()
       navigate("/");
     } catch (error: any) {
-        console.log(error)
+      if (error.originalStatus === 500 || error.originalStatus === 401) {
+        const userRefreshToken = localStorage.getItem('refresh_token');
+        const response = await generateAccessToken(userRefreshToken).unwrap()
+        dispatch(setNewAccessToken({
+            access_token: response?.newAccessToken,
+        }))
+        let request = {
+            id,
+            access_token: response?.newAccessToken,
+        }
+        try {
+          await deleteblog(request).unwrap()
+          navigate("/");
+        } catch (error) {
+
+        }
       }
+    }
   }  
 return (
-    <ChakraProvider>    
-      <Container maxW="80rem" centerContent>      
+    <ChakraProvider>      
+      <Container maxW="80rem" centerContent>        
         <SimpleGrid columns={[1, 1, 1, 1]}>                
-            <Box 
-              p={4}  
-              w="1000px"
+            <Box     
+              p={4}    
+              w="1000px"  
               display={{ md: "flex" }}  
-              //maxWidth="62rem"
+              //maxWidth="62rem"  
               borderWidth={1}
               margin={2}  
               padding="2rem"  
             >
-              <Stack
+              <Stack  
                 align={{ base: "center", md: "stretch" }}
                 textAlign={{ base: "center", md: "left" }}
                 mt={{ base: 4, md: 0 }}

@@ -76,6 +76,13 @@ export const blogApi = createApi({
           body: { refresh_token: localStorage.getItem("refresh_token") || null },
         }),
       }),
+      generateAccessToken: builder.mutation<any,any>({
+        query: (userRefreshToken)=> ({
+          url: `/users/generateToken`,
+          method:'POST',
+          body:{userRefreshToken},
+        })
+      }),
     })
   })
   
@@ -87,5 +94,6 @@ export const blogApi = createApi({
     useDeleteBlogMutation,
     useSignInMutation,
     useSignUpMutation, 
-    useSignOutMutation
+    useSignOutMutation,
+    useGenerateAccessTokenMutation,
   } = blogApi

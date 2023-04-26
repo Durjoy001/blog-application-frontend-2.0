@@ -74,8 +74,8 @@ else
           flexDirection="column"                     
           width="100wh"                  
           height="100vh"      
-          backgroundColor="gray.200"  
-          justifyContent="center"    
+          backgroundColor="gray.200"    
+          justifyContent="center"      
           alignItems="center"  
       >      
           <Stack   

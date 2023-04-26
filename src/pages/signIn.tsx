@@ -51,7 +51,7 @@ export const SignIn : FC<Props> = () => {
           .then((data) => {
             dispatch(
               setUser({
-                name,
+                username:name,
                 loggedIn: true,
                 access_token: data?.accessToken,
                 refresh_token: data?.refToken,
