@@ -11,6 +11,7 @@ import {
   Box,
   Avatar,
   FormControl,
+  useToast
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -23,7 +24,6 @@ import { useSignUpMutation } from '../api/blogApi';
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
-
 interface Props {  
 }
 
@@ -33,12 +33,16 @@ export const SignUp : FC<Props> = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setpasswordConfirm] = useState('');
   const [requestState, setRequestState] = useState("not-requested");
-  const data = useAppSelector((state: RootState) => state.users);
+  const data = useAppSelector((state: RootState) => state.users);  
   const isLoggedIn = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const newID = data.user.length;
-  const [signup, { isLoading }] = useSignUpMutation()
+  const toast = useToast(); 
+  const [signup, { isLoading }] = useSignUpMutation();
+  const {username,loggedIn, access_token } = useAppSelector(
+    (state: RootState) => state.auth
+  );
 
   const signUp = async (e : any) => {
     e.preventDefault();  
@@ -50,7 +54,13 @@ export const SignUp : FC<Props> = () => {
             password,
             passwordConfirm
           }).unwrap() .then(() => {
-              navigate("/signin");
+            toast({
+                title: "You Successfully Create your Account!! Please Login to Continue!!",
+                duration: 4000,
+                status: "success",
+                isClosable: true,
+            });
+            navigate("/signin");
         }); 
         
       setName('');
@@ -60,22 +70,20 @@ export const SignUp : FC<Props> = () => {
       navigate('/signin');  
     } 
   }
-  
-if (data.isAuthenticated){  
+if (loggedIn){  
   return (
     <div>  
       <h1>you are already logged in</h1>  
     </div>
   )  
-}  
-else      
-  return (         
+}    
+return (         
       <Flex              
           flexDirection="column"                     
           width="100wh"                  
           height="100vh"      
           backgroundColor="gray.200"    
-          justifyContent="center"      
+          justifyContent="center"        
           alignItems="center"  
       >      
           <Stack   
@@ -86,13 +94,13 @@ else
           >
               <Avatar bg="teal.500" />
               <Heading color="teal.400">Welcome</Heading>
-              <Box minW={{ base: "90%", md: "468px" }}>
+              <Box minW={{ base: "90%", md: "468px" }}>  
                   <form onSubmit={signUp}>
                       <Stack
                           spacing={4}
                           p="1rem"
                           backgroundColor="whiteAlpha.900"    
-                          boxShadow="md"
+                          boxShadow="md"  
                       >
                           <FormControl>
                               <InputGroup>
@@ -164,7 +172,7 @@ else
                               width="full"
                               //disabled={requestState === "loading" ? 1 : 0}
                           >
-                           SignUp
+                           SignUp  
                           </Button>
                       </Stack>
                   </form>

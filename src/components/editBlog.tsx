@@ -56,6 +56,12 @@ export const EditBlog : FC<Props> = () => {
     const request = {id,name,description,access_token}
       try {
         await updateBlog(request).unwrap();
+        toast({
+          title: "Blog successfully updated!!",
+          duration: 4000,
+          status: "success",
+          isClosable: true,
+        });
         navigate(`/blogs/view/${id}`);
       } catch (error : any) {
         if (error.originalStatus === 500 || error.originalStatus === 401) {
@@ -69,6 +75,12 @@ export const EditBlog : FC<Props> = () => {
           }
           try {
             await updateBlog(request).unwrap();
+            toast({
+              title: "Blog successfully updated!!",
+              duration: 4000,
+              status: "success",
+              isClosable: true,
+            });
             navigate(`/blogs/view/${id}`);
           } catch (error) {
   

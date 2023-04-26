@@ -13,6 +13,7 @@ import {
     Link,
     Avatar,
     FormControl,
+    useToast
   } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -37,7 +38,10 @@ export const SignIn : FC<Props> = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [requestState, setRequestState] = useState("not-requested");
-  // const toast = useToast();
+  const {username,loggedIn, access_token } = useAppSelector(
+    (state: RootState) => state.auth
+  );
+  const toast = useToast();
   //const data = useAppSelector((state: RootState) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -57,19 +61,25 @@ export const SignIn : FC<Props> = () => {
                 refresh_token: data?.refToken,
               })
             );
+            toast({
+                title: " You Logged in Successfully!!",
+                duration: 4000,
+                status: "success",
+                isClosable: true,
+            })
             navigate("/");
           });
       } catch (err: any) {
         console.log(err);
       }
   }
-//   if (data.isAuthenticated){
-//       return (
-//         <div>
-//           <h1>you are already logged in</h1>
-//         </div>
-//       )
-//   }
+  if (loggedIn){
+      return (
+        <div>
+          <h1>you are already logged in</h1>
+        </div>
+    )
+}
 return (       
             <Flex          
               flexDirection="column"             

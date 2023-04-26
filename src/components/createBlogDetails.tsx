@@ -46,6 +46,12 @@ export const CreateBlogDetails : FC<Props> = () => {
     }
     try {
         await addBlog(request).unwrap()
+        toast({
+          title: "Blog successfully created!!",
+          duration: 4000,
+          status: "success",
+          isClosable: true,
+        });
         setName('')
         setDescription('')
         navigate("/");
@@ -63,6 +69,12 @@ export const CreateBlogDetails : FC<Props> = () => {
         }
         try {
             await addBlog(request).unwrap()
+            toast({
+              title: "Blog successfully created!!",
+              duration: 4000,
+              status: "success",
+              isClosable: true,
+            });
             setName('')
             setDescription('')
             navigate("/");
