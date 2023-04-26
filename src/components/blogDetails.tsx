@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../app/store';
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { postDeleted } from './../slices/blogSlice';
+import { useDeleteBlogMutation } from '../api/blogApi';
 
 interface Props {
   id : string,  
@@ -36,26 +37,31 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const onClose = () => setIsOpen(false)
   //const auth = useAppSelector((state: RootState) => state.users);
-  const { username, loggedIn } = useAppSelector(
+  const { username, loggedIn , access_token } = useAppSelector(
     (state: RootState) => state.auth
   );
   const cancelRef = React.useRef<null | HTMLButtonElement>(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [deleteblog] = useDeleteBlogMutation();
 
-  const deleteBlog = (e : any) =>{
+  const deleteBlog = async (e : any) =>{
     e.preventDefault();    
-    setRequestState("completed");
-    dispatch(postDeleted(id))  
-    navigate('/')
+    const request = {id, access_token}
+    try {
+      await deleteblog(request).unwrap()
+      navigate("/");
+    } catch (error: any) {
+        console.log(error)
+      }
   }  
 return (
     <ChakraProvider>    
       <Container maxW="80rem" centerContent>      
-        <SimpleGrid columns={[1, 1, 1, 1]}>              
+        <SimpleGrid columns={[1, 1, 1, 1]}>                
             <Box 
-              p={4}
+              p={4}  
               w="1000px"
               display={{ md: "flex" }}  
               //maxWidth="62rem"

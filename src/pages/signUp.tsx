@@ -71,12 +71,12 @@ if (data.isAuthenticated){
 else      
   return (         
       <Flex              
-          flexDirection="column"                   
+          flexDirection="column"                     
           width="100wh"                  
           height="100vh"      
           backgroundColor="gray.200"  
           justifyContent="center"    
-          alignItems="center"
+          alignItems="center"  
       >      
           <Stack   
               flexDir="column"   

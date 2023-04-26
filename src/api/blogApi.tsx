@@ -46,9 +46,11 @@ export const blogApi = createApi({
         }),
         invalidatesTags: ['Blogs']
       }),
-      deleteBlog: builder.mutation({
-        query: (id) => ({
+      deleteBlog: builder.mutation<void,any>({
+        query: ({id, access_token}) => ({
           url: `/blogs/${id}`,
+          body: {},
+          headers: {Authorization : `Bearer ${access_token}`},
           method: "DELETE",
         }),
         invalidatesTags: ['Blogs']
