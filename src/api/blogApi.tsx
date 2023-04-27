@@ -22,11 +22,11 @@ export const blogApi = createApi({
     endpoints: builder => ({
       getBlogs: builder.query<any, void>({
         query: () => '/blogs',
-        providesTags: ['Blogs']
+          providesTags: ['Blogs']
       }),
       getBlog: builder.query<any, string | undefined>({
         query: id => `/blogs/${id}`,
-        providesTags: ['Blogs']
+          providesTags: ['Blogs']
       }),
       addNewBlog: builder.mutation<void,any>({
         query: ({name,description,access_token}) => ({
