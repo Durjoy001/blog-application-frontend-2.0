@@ -13,7 +13,9 @@ import {
     Link,
     Avatar,
     FormControl,
-    useToast
+    useToast,
+    Text,
+    Spinner
   } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -45,7 +47,7 @@ export const SignIn : FC<Props> = () => {
   //const data = useAppSelector((state: RootState) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [signIn] = useSignInMutation();
+  const [signIn, {isLoading, isError,error}] = useSignInMutation();
 
   const logIn = async (e : any) => {
     e.preventDefault();
@@ -108,7 +110,7 @@ return (
                               <FormControl>
                                   <InputGroup>
                                       <InputLeftElement
-                                          pointerEvents="none"
+                                          pointerEvents="none"  
                                           children={<CFaUserAlt color="gray.300" />}
                                       />
                                       <Input data-testid = "test-email" type="text"
@@ -124,7 +126,7 @@ return (
                                       <InputLeftElement
                                           pointerEvents="none"
                                           color="gray.300"
-                                          children={<CFaLock color="gray.300" />}
+                                          children={<CFaLock color="gray.300" />}  
                                       />
                                       <Input data-testid = "test-password"
                                           type={showPassword ? "text" : "password"}
@@ -140,12 +142,12 @@ return (
                                       </InputRightElement>
                                   </InputGroup>
                               </FormControl>
-                              {/* {
-                                  requestState === "error" && (
+                              {
+                                  isError && (
                                   <Text display="block" fontSize="sm" color="red">
                                   Wrong Email or Password!!!
                                   </Text>
-                              )} */}
+                              )}
                               <Button
                                   borderRadius={0}
                                   type="submit"
@@ -153,6 +155,7 @@ return (
                                   colorScheme="teal"
                                   width="full"
                               >
+                                {isLoading && <Spinner mr={3} />}
                                   Login
                               </Button>
                           </Stack>

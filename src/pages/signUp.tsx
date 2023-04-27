@@ -12,7 +12,8 @@ import {
   Avatar,
   FormControl,
   useToast,
-  Text
+  Text,
+  Spinner
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -128,7 +129,7 @@ return (
                                       pointerEvents="none"
                                       children={<CFaUserAlt color="gray.300" />}
                                   />
-                                  <Input data-testid = "test-name"
+                                  <Input data-testid = "test-name"  
                                       placeholder="Name"
                                       type="text"
                                       name="name"
@@ -212,6 +213,7 @@ return (
                               width="full"
                               //disabled={requestState === "loading" ? 1 : 0}
                           >
+                            {isLoading && <Spinner mr={3} />}
                            SignUp  
                           </Button>
                       </Stack>
