@@ -4,7 +4,8 @@ import {
   Stack,
   useToast,
   Text,
-  Textarea
+  Textarea,
+  Spinner
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useParams } from 'react-router-dom';
@@ -35,13 +36,13 @@ export const EditBlog : FC<Props> = () => {
   const [error,setError] = useState();
   const toast = useToast(); 
   const navigate = useNavigate();
-  const {data,isLoading} = useGetBlogQuery(id);
-  console.log(data)
+  const {data} = useGetBlogQuery(id);
   const [name,setName] = useState('');
   const [description,setDescription] = useState('');
   const dispatch = useDispatch()
-  const [updateBlog] = useUpdateBlogMutation();
+  const [updateBlog, {isLoading, isError}] = useUpdateBlogMutation();
   const [generateAccessToken] = useGenerateAccessTokenMutation();
+  const [blogError,setBlogError] = useState('');
   const { username,loggedIn,access_token } = useAppSelector(
     (state: RootState) => state.auth
   );
@@ -52,7 +53,6 @@ export const EditBlog : FC<Props> = () => {
 
   const updateblog = async (e : any) =>{
     e.preventDefault()
-    console.log(id)
     const request = {id,name,description,access_token}
       try {
         await updateBlog(request).unwrap();
@@ -83,13 +83,12 @@ export const EditBlog : FC<Props> = () => {
             });
             navigate(`/blogs/view/${id}`);
           } catch (error) {
-  
+                
           }
         }
+        setBlogError(error.data.errors[0]);
+        console.log(error.data.errors[0]);
       }
-  }
-  if(isLoading){
-      return <h1>loading...</h1>
   }
   if (!data) {
     return <h1>Blog not found</h1>;
@@ -123,9 +122,9 @@ export const EditBlog : FC<Props> = () => {
                   size="lg"
               />
               {
-                  requestState === "error" && (
+                  blogError !== null && (
                   <Text display="block" fontSize="sm" color="red">
-                  {error}
+                  {blogError}
                   </Text>
               )}
               <Button
@@ -135,6 +134,7 @@ export const EditBlog : FC<Props> = () => {
                   colorScheme="teal"
                   width="full"
               >
+                {isLoading && <Spinner mr={2} />}
                 UPDATE
               </Button>
           </Stack>

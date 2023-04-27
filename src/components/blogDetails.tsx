@@ -14,6 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
+  Spinner
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -47,7 +48,7 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();  
-  const [deleteblog] = useDeleteBlogMutation();
+  const [deleteblog, {isLoading}] = useDeleteBlogMutation();
 
   const deleteBlog = async (e : any) =>{
     e.preventDefault();    
@@ -82,7 +83,7 @@ return (
             <Box     
               p={4}    
               w="1000px"  
-              display={{ md: "flex" }}  
+              display={{ md: "flex" }}    
               //maxWidth="62rem"  
               borderWidth={1}
               margin={2}  
@@ -112,7 +113,7 @@ return (
                   {description}
                 </Text>
 
-                <Text my={2} color="gray.500">
+                <Text my={2} color="gray.500">  
                   {"Author: " + creator}
                 </Text>
                 {/* <Text my={2} color="gray.500">
@@ -124,6 +125,7 @@ return (
                         variant="outline"
                         _hover={{ bg: "teal.700", borderColor: "teal.700" }}
                       >
+                      {isLoading && <Spinner mr={3} />}
                       Update
                     </Button>)
                   }

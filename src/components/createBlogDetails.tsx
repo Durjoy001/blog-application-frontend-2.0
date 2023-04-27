@@ -4,7 +4,8 @@ import {
   Stack,
   useToast,
   Text,
-  Textarea
+  Textarea,
+  Spinner
 }from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +32,7 @@ export const CreateBlogDetails : FC<Props> = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //const newID = data.length;
-  const [addBlog] = useAddNewBlogMutation();
+  const [addBlog, {isLoading}] = useAddNewBlogMutation();
   const [generateAccessToken] = useGenerateAccessTokenMutation();
   const {username, access_token } = useAppSelector(
     (state: RootState) => state.auth
@@ -45,7 +46,7 @@ export const CreateBlogDetails : FC<Props> = () => {
         description
     }
     try {
-        await addBlog(request).unwrap()
+        await addBlog(request).unwrap();
         toast({
           title: "Blog successfully created!!",
           duration: 4000,
@@ -68,7 +69,7 @@ export const CreateBlogDetails : FC<Props> = () => {
             description
         }
         try {
-            await addBlog(request).unwrap()
+            await addBlog(request).unwrap();
             toast({
               title: "Blog successfully created!!",
               duration: 4000,
@@ -124,6 +125,7 @@ export const CreateBlogDetails : FC<Props> = () => {
                   colorScheme="teal"
                   width="full"
               >
+                {isLoading && <Spinner mr={3} />}
                   SUBMIT
               </Button>
           </Stack>
