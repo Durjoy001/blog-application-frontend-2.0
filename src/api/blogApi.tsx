@@ -14,10 +14,12 @@ import {
     AccessToken,
     SignInResponse,
   } from "../models/authModel";
+import baseQueryAuth from '../rtk/baseQueryAuth';
 
 export const blogApi = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/v1/" }),
+    //baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/v1/" }),
+    baseQuery : baseQueryAuth,
     tagTypes: ["Blogs"],
     endpoints: builder => ({
       getBlogs: builder.query<any, void>({

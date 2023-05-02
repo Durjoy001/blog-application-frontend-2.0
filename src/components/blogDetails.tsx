@@ -57,23 +57,6 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
       await deleteblog(request).unwrap()
       navigate("/");
     } catch (error: any) {
-      if (error.originalStatus === 500 || error.originalStatus === 401) {
-        const userRefreshToken = localStorage.getItem('refresh_token');
-        const response = await generateAccessToken(userRefreshToken).unwrap()
-        dispatch(setNewAccessToken({
-            access_token: response?.newAccessToken,
-        }))
-        let request = {
-            id,
-            access_token: response?.newAccessToken,
-        }
-        try {
-          await deleteblog(request).unwrap()
-          navigate("/");
-        } catch (error) {
-
-        }
-      }
     }
   }  
 return (
@@ -148,7 +131,7 @@ return (
               
                           <AlertDialogBody>
                             Are you sure to delete this blog? You can't undo this action afterwards.
-                          </AlertDialogBody>
+                          </AlertDialogBody>  
               
                           <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={onClose}>

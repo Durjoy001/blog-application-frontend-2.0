@@ -57,33 +57,7 @@ export const CreateBlogDetails : FC<Props> = () => {
         setDescription('')
         navigate("/");
     } catch (error: any) {
-      if (error.originalStatus === 500 || error.originalStatus === 401) {
-        const userRefreshToken = localStorage.getItem('refresh_token');
-        const response = await generateAccessToken(userRefreshToken).unwrap()
-        dispatch(setNewAccessToken({
-            access_token: response?.newAccessToken,
-        }))
-        let request = {
-            access_token: response?.newAccessToken,
-            name,
-            description
-        }
-        try {
-            await addBlog(request).unwrap();
-            toast({
-              title: "Blog successfully created!!",
-              duration: 4000,
-              status: "success",
-              isClosable: true,
-            });
-            setName('')
-            setDescription('')
-            navigate("/");
-        } catch (error) {
-
-        }
-
-      }
+      console.log("create error", error)
     };
   }
   return (

@@ -64,28 +64,6 @@ export const EditBlog : FC<Props> = () => {
         });
         navigate(`/blogs/view/${id}`);
       } catch (error : any) {
-        if (error.originalStatus === 500 || error.originalStatus === 401) {
-          const userRefreshToken = localStorage.getItem('refresh_token');
-          const response = await generateAccessToken(userRefreshToken).unwrap()
-          dispatch(setNewAccessToken({
-              access_token: response?.newAccessToken,
-          }))
-          let request = {
-              id,name,description,access_token: response?.newAccessToken,
-          }
-          try {
-            await updateBlog(request).unwrap();
-            toast({
-              title: "Blog successfully updated!!",
-              duration: 4000,
-              status: "success",
-              isClosable: true,
-            });
-            navigate(`/blogs/view/${id}`);
-          } catch (error) {
-                
-          }
-        }
         setBlogError(error.data.errors[0]);
         console.log(error.data.errors[0]);
       }
@@ -99,14 +77,14 @@ export const EditBlog : FC<Props> = () => {
   return (
       <form onSubmit={updateblog}>  
           <Stack
-              spacing={4}
-              p="5rem"
-              backgroundColor="whiteAlpha.900"  
+              spacing={4}  
+              p="5rem"  
+              backgroundColor="whiteAlpha.900"    
               boxShadow="md"    
           > 
               <Textarea 
                   rows={3}
-                  variant="outline"
+                  variant="outline"  
                   name="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
