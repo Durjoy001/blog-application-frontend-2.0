@@ -114,7 +114,7 @@ return (
                                           children={<CFaUserAlt color="gray.300" />}
                                       />
                                       <Input data-testid = "test-email" type="text"
-                                          placeholder="Name"
+                                          placeholder="User Name"
                                           name="name"
                                           onChange={(e) => setName(e.target.value)}
                                           required

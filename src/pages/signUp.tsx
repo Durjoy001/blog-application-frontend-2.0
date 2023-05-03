@@ -99,7 +99,7 @@ if (loggedIn){
   )  
 }    
 return (           
-      <Flex              
+      <Flex                
           flexDirection="column"                       
           width="100wh"                  
           height="100vh"      
@@ -110,7 +110,7 @@ return (
           <Stack   
               flexDir="column"   
               mb="2"    
-              justifyContent="center"
+              justifyContent="center"  
               alignItems="center"  
           >
               <Avatar bg="teal.500" />
@@ -130,17 +130,17 @@ return (
                                       children={<CFaUserAlt color="gray.300" />}
                                   />
                                   <Input data-testid = "test-name"  
-                                      placeholder="Name"
+                                      placeholder="User Name"  
                                       type="text"
                                       name="name"
-                                      onChange={(e) => setName(e.target.value)}
+                                      onChange={(e) => setName(e.target.value)}  
                                       required  
-                                      autoFocus
+                                      autoFocus  
                                   />
                               </InputGroup>
                           </FormControl>
                             {
-                                nameError !== null && (<Text display="block" fontSize="sm" color="red">  
+                                nameError !== null && (<Text display="block" fontSize="sm" color="red">    
                                 {nameError}
                                 </Text>)    
                             }

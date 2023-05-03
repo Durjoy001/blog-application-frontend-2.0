@@ -26,15 +26,17 @@ import { postDeleted } from './../slices/blogSlice';
 import { useDeleteBlogMutation } from '../api/blogApi';
 import { useGenerateAccessTokenMutation } from '../api/blogApi';
 import { setNewAccessToken, setUser } from '../slices/authSlice';
+import { useUpdateBlogMutation } from '../api/blogApi';
 
 interface Props {
   id : string,  
   name : string,
   description: string,
-  creator : string
+  creator : string,
+  time : string
 }
 
-export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
+export const BlogDetails : FC<Props> = ({id, name , description , creator,time}) => {
   const [requestState, setRequestState] = useState("not-requested");
   const toast = useToast(); 
   const [isOpen, setIsOpen] = React.useState(false)
@@ -49,8 +51,10 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();  
   const [deleteblog, {isLoading}] = useDeleteBlogMutation();
+  //const [{isLoading}] = useUpdateBlogMutation();
 
   const deleteBlog = async (e : any) =>{
+
     e.preventDefault();    
     const request = {id, access_token}
     try {
@@ -61,7 +65,7 @@ export const BlogDetails : FC<Props> = ({id, name , description , creator}) => {
   }  
 return (
     <ChakraProvider>      
-      <Container maxW="80rem" centerContent>        
+      <Container maxW="80rem" centerContent>          
         <SimpleGrid columns={[1, 1, 1, 1]}>                
             <Box     
               p={4}    
@@ -79,7 +83,7 @@ return (
                 ml={{ md: 6 }}
               >
                 <Text
-                  fontWeight="bold"
+                  fontWeight="bold"  
                   textTransform="uppercase"
                   fontSize="lg"
                   letterSpacing="wide"
@@ -99,9 +103,9 @@ return (
                 <Text my={2} color="gray.500">  
                   {"Author: " + creator}
                 </Text>
-                {/* <Text my={2} color="gray.500">
-                  {"Created at: " + blogs.time}
-                </Text> */}
+                <Text my={2} color="gray.500">
+                  {"Created at: " + time}
+                </Text>  
                   {
                     loggedIn && username === creator &&  (<Button as = {RouterLink} to= {`/blogs/${id}`}
                         w="920px"
@@ -138,6 +142,7 @@ return (
                               Cancel
                             </Button>
                             <Button colorScheme="red" onClick={deleteBlog} ml={3}>
+                              {isLoading && <Spinner mr={3} />}
                               Delete
                             </Button>
                           </AlertDialogFooter>

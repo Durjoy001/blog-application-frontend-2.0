@@ -75,15 +75,15 @@ export const EditBlog : FC<Props> = () => {
     return (<h1>You don't have permission</h1>)
   }
   return (
-      <form onSubmit={updateblog}>  
-          <Stack
+      <form onSubmit={updateblog}>    
+          <Stack  
               spacing={4}  
               p="5rem"  
               backgroundColor="whiteAlpha.900"    
               boxShadow="md"    
           > 
-              <Textarea 
-                  rows={3}  
+              <Textarea   
+                  rows={3}    
                   variant="outline"  
                   name="name"
                   value={name}

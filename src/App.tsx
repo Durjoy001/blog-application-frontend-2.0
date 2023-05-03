@@ -23,7 +23,7 @@ const App : FC = () =>{
              <Route path="/signup" Component={SignUp} />
              <Route path="/signin" Component={SignIn} />
              <Route path="/" Component= {Blogs} />
-             <Route path="/blogs" Component={CreateBlog} />
+             <Route path="/blogs/new" Component={CreateBlog} />
              <Route path="/blogs/view/:id" Component={BlogView} />
              <Route path="/blogs/:id" Component={UpdateBlog} />
          </Routes>

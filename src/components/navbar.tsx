@@ -31,18 +31,11 @@ export const Navbar : FC<Props> = () => {
   const { username, loggedIn } = useAppSelector(
     (state: RootState) => state.auth
   );
-
-  //const name: string = window.localStorage.getItem("username") || "";
-  //const loggedIn: boolean = window.localStorage.getItem("loggedIn") ? true : false;
-  
-  //console.log(name)
-  //const name: localStorage.getItem("name") || "";
-  //const loggedIn: localStorage.getItem("loggedIn") ? true : false;
   const [signOut] = useSignOutMutation();
   const dispatch = useAppDispatch();
   const logout = async () => {
     await signOut();
-    dispatch(removeUser());
+    dispatch(removeUser());  
   };
 
   return (
@@ -66,7 +59,7 @@ export const Navbar : FC<Props> = () => {
 
       <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
         <HamburgerIcon />
-      </Box>    
+      </Box>        
 
       <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}    
@@ -80,7 +73,7 @@ export const Navbar : FC<Props> = () => {
               { username }  
             </Button> )
         }
-        { loggedIn && (<Button as = {RouterLink} to="/blogs"
+        { loggedIn && (<Button as = {RouterLink} to="/blogs/new"
             variant="outline"
             _hover={{ bg: "teal.700", borderColor: "teal.700" }}
           >

@@ -1,9 +1,10 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {
   Box,
   Text,
   Button,
   Stack,
+  Spinner
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const BlogCard : FC<Props> = ({id, name , description , creator, time}) => {
+
   return (
     <div data-testid = "test-blog-card">
     <Box
@@ -51,12 +53,12 @@ export const BlogCard : FC<Props> = ({id, name , description , creator, time}) =
         <Text my={2} color="gray.500">
           {"Author: " + creator}
         </Text>
-        {/* <Text my={2} color="gray.500">
+        <Text my={2} color="gray.500">
           {"Created at: " +time}
-        </Text> */}
+        </Text>
         <Button as = {RouterLink} to= {`/blogs/view/${id}`}  data-testid = "button-test" maxWidth="100px" my={2} align-right>
           Show More
-        </Button>
+        </Button>  
       </Stack>
    </Box>
    </div>
