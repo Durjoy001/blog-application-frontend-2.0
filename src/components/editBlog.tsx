@@ -72,7 +72,7 @@ export const EditBlog : FC<Props> = () => {
     return <h1>Blog not found</h1>;
   }  
   if(!loggedIn || username !== data.creator){
-    return (<h1>don't have permission</h1>)
+    return (<h1>You don't have permission</h1>)
   }
   return (
       <form onSubmit={updateblog}>  
@@ -83,7 +83,7 @@ export const EditBlog : FC<Props> = () => {
               boxShadow="md"    
           > 
               <Textarea 
-                  rows={3}
+                  rows={3}  
                   variant="outline"  
                   name="name"
                   value={name}

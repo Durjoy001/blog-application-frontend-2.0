@@ -34,7 +34,7 @@ export const CreateBlogDetails : FC<Props> = () => {
   //const newID = data.length;
   const [addBlog, {isLoading}] = useAddNewBlogMutation();
   const [generateAccessToken] = useGenerateAccessTokenMutation();
-  const {username, access_token } = useAppSelector(
+  const {username, access_token , loggedIn } = useAppSelector(
     (state: RootState) => state.auth
   );
 
@@ -60,10 +60,14 @@ export const CreateBlogDetails : FC<Props> = () => {
       console.log("create error", error)
     };
   }
+  if(!loggedIn){
+     navigate("/");
+     return ( <h1> You are not Logged in !! </h1> )
+  }
   return (
       <form onSubmit={createBlog}>      
-          <Stack
-          spacing={4}   
+          <Stack  
+          spacing={4}     
           p="5rem"
           backgroundColor="whiteAlpha.900"
           boxShadow="md"
