@@ -16,11 +16,9 @@ import {
   Spinner
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
-import { useContext, useState } from "react";
-import { useDispatch } from 'react-redux';
-import { userAdded } from '../slices/userSlice';
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store'
 import { useSignUpMutation } from '../api/blogApi';
 
@@ -29,29 +27,23 @@ const CFaLock = chakra(FaLock);
 interface Props {  
 }
 
-
-  
 export const SignUp : FC<Props> = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setpasswordConfirm] = useState('');
   const [requestState, setRequestState] = useState("not-requested");
-  const data = useAppSelector((state: RootState) => state.users);  
-  const isLoggedIn = false;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const newID = data.user.length;
   const toast = useToast(); 
-  const [signup, { isLoading }] = useSignUpMutation();
-  const {username,loggedIn, access_token } = useAppSelector(
+  const [signup, { isLoading}] = useSignUpMutation();
+  const {loggedIn} = useAppSelector(
     (state: RootState) => state.auth
   );
-  const [error,setError] = useState([]);
   const [nameError, setNameError] = useState('');
   const [passwordError, setPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
   const [userUniqueError,setUserUniqueError] = useState('');
+  const [emailError,setEmailError] = useState('');
 
   const signUp = async (e : any) => {
     e.preventDefault();  
@@ -75,6 +67,7 @@ export const SignUp : FC<Props> = () => {
             setPasswordError(null);
             setConfirmPasswordError(null);
             setUserUniqueError('')
+            setEmailError('')
             if(err.data && err.data.message && err.data.message.errors && err.data.message.errors.passwordConfirm && err.data.message.errors.passwordConfirm.message){
                 setConfirmPasswordError(err.data.message.errors.passwordConfirm.message);
             }
@@ -86,6 +79,9 @@ export const SignUp : FC<Props> = () => {
             }
             else if(err.data && err.data.message && err.data.message.keyValue && err.data.message.keyValue.email){
                 setUserUniqueError("User email already exists")
+            }
+            else if(err.data && err.data.message && err.data.message.errors && err.data.message.errors.email && err.data.message.errors.email.message){
+                setEmailError(err.data.message.errors.email.message)
             }
             setRequestState("error");
         }) 
@@ -163,6 +159,11 @@ return (
                             {
                                 userUniqueError !== null && (<Text display="block" fontSize="sm" color="red">  
                                 {userUniqueError}
+                                </Text>)
+                            }
+                            {
+                                emailError !== null && (<Text display="block" fontSize="sm" color="red">  
+                                {emailError}
                                 </Text>)
                             }
                           <FormControl>

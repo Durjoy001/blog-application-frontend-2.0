@@ -14,7 +14,6 @@ import { RootState } from '../app/store'
 import { removeUser } from '../slices/authSlice';
 import { useSignOutMutation } from '../api/blogApi';
 
-
 declare global {
   interface Window {
     localStorage: Storage;
@@ -27,7 +26,6 @@ interface Props {
 export const Navbar : FC<Props> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const handleToggle = () => (isOpen ? onClose() : onOpen());
-  //const data = useAppSelector((state: RootState) => state.users);  
   const { username, loggedIn } = useAppSelector(
     (state: RootState) => state.auth
   );
@@ -62,16 +60,13 @@ export const Navbar : FC<Props> = () => {
       </Box>        
 
       <Box
-        display={{ base: isOpen ? "block" : "none", md: "block" }}    
+        display={{ base: isOpen ? "block" : "none", md: "flex" }}     
         mt={{ base: 4, md: 0 }}
+        alignItems="center"
       >  
-        { loggedIn && (
-            <Button
-              variant="outline"
-              _hover={{ bg: "teal.700", borderColor: "teal.700" }}
-            >
-              { username }  
-            </Button> )
+        
+        { loggedIn && (  
+            <Text fontSize="24px" mr={4}> {username}</Text>)
         }
         { loggedIn && (<Button as = {RouterLink} to="/blogs/new"
             variant="outline"

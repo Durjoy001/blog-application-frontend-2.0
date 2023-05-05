@@ -7,15 +7,11 @@ import {
   Textarea,
   Spinner
 }from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux'
-import { postAdded } from '../slices/blogSlice';
-import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { useAppSelector } from '../app/hooks'
 import { RootState } from '../app/store';
 import { useAddNewBlogMutation } from '../api/blogApi';
-import { useGenerateAccessTokenMutation } from '../api/blogApi';
-import { setNewAccessToken, setUser } from '../slices/authSlice';
 
 interface Props {
 
@@ -24,17 +20,11 @@ interface Props {
 export const CreateBlogDetails : FC<Props> = () => {
   const [name,setName] = useState('');
   const [description,setDescription] = useState('');
-  //const data = useAppSelector((state: RootState) => state.blogs);
-  const [requestState, setRequestState] = useState("completed");
-  const [error,setError] = useState();
   const toast = useToast(); 
-  const auth = useAppSelector((state: RootState) => state.users);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  //const newID = data.length;
   const [addBlog, {isLoading}] = useAddNewBlogMutation();
-  const [generateAccessToken] = useGenerateAccessTokenMutation();
-  const {username, access_token , loggedIn } = useAppSelector(
+  const [blogError,setBlogError] = useState('');
+  const {access_token , loggedIn } = useAppSelector(
     (state: RootState) => state.auth
   );
 
@@ -57,6 +47,7 @@ export const CreateBlogDetails : FC<Props> = () => {
         setDescription('')
         navigate("/");
     } catch (error: any) {
+      setBlogError(error.data.errors[0]);
       console.log("create error", error)
     };
   }
@@ -91,9 +82,9 @@ export const CreateBlogDetails : FC<Props> = () => {
                   size="lg"
               />
               {
-                  requestState === "error" && (
+                  blogError !== null && (
                   <Text display="block" fontSize="sm" color="red">
-                  {error}
+                  {blogError}
                   </Text>
               )}
               <Button

@@ -1,19 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {
-    Blog,
-    BlogsResponse,
-    BlogResponse,
-    AddBlog,
-    UpdateBlog,
-  } from "../models/blogModel";
-
-  import {
-    SignInPayload,
-    SignUpPayload,
-    RefreshToken,
-    AccessToken,
-    SignInResponse,
-  } from "../models/authModel";
+import { createApi} from '@reduxjs/toolkit/query/react'
 import baseQueryAuth from '../rtk/baseQueryAuth';
 
 export const blogApi = createApi({

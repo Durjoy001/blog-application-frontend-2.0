@@ -1,10 +1,9 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {
   Box,
   Text,
   Button,
   Stack,
-  Spinner
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 interface Props {
@@ -41,6 +40,9 @@ export const BlogCard : FC<Props> = ({id, name , description , creator, time}) =
         >
             {name}
         </Text>
+        <Text my={2} color="gray.500">
+          {"Author: " + creator}
+        </Text>
         <Text
           my={1}
           display="block"
@@ -48,10 +50,6 @@ export const BlogCard : FC<Props> = ({id, name , description , creator, time}) =
           lineHeight="normal"
         >
             {description.substring(0, 200)+"...."}
-        </Text>
-
-        <Text my={2} color="gray.500">
-          {"Author: " + creator}
         </Text>
         <Text my={2} color="gray.500">
           {"Created at: " +time}

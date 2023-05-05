@@ -7,41 +7,25 @@ import {
   Textarea,
   Spinner
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../app/store';
-import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { postUpdated } from './../slices/blogSlice';
+import { useAppSelector } from '../app/hooks'
 import { useUpdateBlogMutation } from '../api/blogApi';
 import { useGetBlogQuery } from '../api/blogApi';
-import { useGenerateAccessTokenMutation } from '../api/blogApi';
-import { setNewAccessToken, setUser } from '../slices/authSlice';
-
 
 interface Props {
 
 }
-interface data {
-  id : string,  
-  name : string,
-  description: string,
-  creator : string
-}
 export const EditBlog : FC<Props> = () => {
-  const [loaded,setLoaded] = useState(true);
   const  {id}  = useParams();
-  const [requestState, setRequestState] = useState("not-requested");
-  const [error,setError] = useState();
   const toast = useToast(); 
   const navigate = useNavigate();
   const {data} = useGetBlogQuery(id);
   const [name,setName] = useState('');
   const [description,setDescription] = useState('');
-  const dispatch = useDispatch()
-  const [updateBlog, {isLoading, isError}] = useUpdateBlogMutation();
-  const [generateAccessToken] = useGenerateAccessTokenMutation();
+  const [updateBlog, {isLoading}] = useUpdateBlogMutation();
   const [blogError,setBlogError] = useState('');
   const { username,loggedIn,access_token } = useAppSelector(
     (state: RootState) => state.auth
