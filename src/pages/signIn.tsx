@@ -71,6 +71,7 @@ export const SignIn : FC<Props> = () => {
       } catch (err: any) {
         console.log(err);
       }
+      console.log("log")
   }
   if (loggedIn){
       return (

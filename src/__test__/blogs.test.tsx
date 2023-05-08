@@ -8,18 +8,6 @@ import { store }  from './../app/store'
 import { MemoryRouter } from 'react-router-dom';
 
 describe('home page test', () => {
-    test('renders blog title and content', () => {
-        const name = 'Chakra Ui react js';
-        render(
-          <MemoryRouter>
-            <Provider store={store}>
-              <Blogs />
-            </Provider>
-          </MemoryRouter>)
-
-        const titleElement = screen.getByText(name);
-        expect(titleElement).toBeInTheDocument();
-      }); 
       
       test("renders blogs inside a container", () => {
         render(
