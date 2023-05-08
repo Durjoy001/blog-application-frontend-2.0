@@ -50,28 +50,33 @@ describe('home page test', () => {
         expect(getByText('Author: testuser')).toBeInTheDocument();
       });
 
-    //   test('clicking delete button opens confirmation dialog', () => {
-    //     const props = {
-    //       id: '123',
-    //       name: 'Test Blog',
-    //       description: 'This is a test blog',
-    //       creator: 'testuser',
-    //       time: '2022-05-08T10:00:00.000Z'
-    //     };
-      
-    //    // const { getByText, getByRole } = render(<BlogDetails {...props} loggedIn={true} username="testuser" />);
+      test('shows "Update" button only to creator of blog', () => {
+        const { queryByText } = render( 
+            <MemoryRouter>
+                <Provider store={store}> 
+                   <BlogDetails id="1" name="Test Blog" description="This is a test blog" creator="John Doe" time="2022-05-08T12:00:00Z" />
+                </Provider>
+            </MemoryRouter>);
+            expect(queryByText('Update')).toBeNull();
+      });
 
-    //     const { getByText, getByRole } =render(
-    //         <MemoryRouter>
-    //           <Provider store={store}>
-    //             <BlogDetails {...props} />
-    //           </Provider>
-    //         </MemoryRouter>);
-      
-    //     const deleteButton = getByText('Delete');
-    //     fireEvent.click(deleteButton);
-      
-    //     const dialog = getByRole('dialog');
-    //     expect(dialog).notToBeInTheDocument();
-    //   });
+      test('shows "Delete" button only to creator of blog', () => {
+        const { queryByText } = render( 
+            <MemoryRouter>
+                <Provider store={store}> 
+                   <BlogDetails id="1" name="Test Blog" description="This is a test blog" creator="John Doe" time="2022-05-08T12:00:00Z" />
+                </Provider>
+            </MemoryRouter>);
+        expect(queryByText('Delete')).toBeNull();
+      });
+
+      test('opens confirmation dialog when "Delete" button is clicked', async () => {
+        const { queryByText } = render( 
+            <MemoryRouter>
+                <Provider store={store}> 
+                   <BlogDetails id="1" name="Test Blog" description="This is a test blog" creator="John Doe" time="2022-05-08T12:00:00Z" />
+                </Provider>
+            </MemoryRouter>);
+        expect(queryByText('Are you sure to delete this blog? You can\'t undo this action afterwards.')).toBeNull();
+      })
 })
